@@ -1,0 +1,7 @@
+{
+  "name": "GymTracker-Ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

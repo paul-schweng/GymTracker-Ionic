@@ -1,0 +1,26 @@
+<div *ngIf="firstPage; else secondPage" class="c-rainbow-container ion-text-center">
+  <ul class="c-rainbow">
+    <li class="c-rainbow__layer c-rainbow__layer--white">404</li>
+    <li class="c-rainbow__layer c-rainbow__layer--orange">404</li>
+    <li class="c-rainbow__layer c-rainbow__layer--red">404</li>
+    <li class="c-rainbow__layer c-rainbow__layer--violet">404</li>
+    <li class="c-rainbow__layer c-rainbow__layer--blue">404</li>
+    <li class="c-rainbow__layer c-rainbow__layer--green">404</li>
+    <li class="c-rainbow__layer c-rainbow__layer--yellow">404</li>
+  </ul>
+  <div class="break"></div>
+  <div class="not-found-text">
+    <h3>Diese Seite wurde nicht gefunden</h3>
+  </div>
+</div>
+
+
+<ng-template #secondPage>
+  <div class="car-container">
+    <div class="car"></div>
+  </div>
+  <div class="car-text ion-text-center">
+    <span>404</span>
+    <h2><b>Auch wir suchen diese Seite...</b></h2>
+  </div>
+</ng-template>

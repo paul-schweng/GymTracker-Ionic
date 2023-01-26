@@ -1,0 +1,53 @@
+
+  <form (ngSubmit)="registerClicked()" class="d-inline-flex justify-content-center w-100 mb-5">
+
+    <div class="d-inline-grid w-75">
+
+      <h1 class="d-inline-grid py-4 display-3">
+        Willkommen!
+        <h4 class="pt-4 h4">
+          Hast Du bereits einen Account?
+          <a routerLink="/login">Anmelden</a>
+        </h4>
+      </h1>
+
+
+      <h6 class="pt-4 h6">Name</h6>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input placeholder="Namen eingeben..." ngModel="user.name"></ion-input>
+        <ion-note slot="error" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</ion-note>
+      </ion-item>
+
+      <label class="pt-4 h6">Username</label>
+      <ion-item>
+        <ion-label>Username</ion-label>
+        <ion-input placeholder="Username eingeben..." ngModel="user.username" name="username" maxlength="20" required="true" ></ion-input>
+        <ion-note slot="error" *ngIf="formGroup.controls['username'].hasError('required')">Darf nicht leer sein!</ion-note>
+        <ion-note slot="error" *ngIf="formGroup.controls['username'].hasError('pattern')">Erlaubte Zeichen: a-z 0-9 . - _</ion-note>
+        <ion-note slot="error" *ngIf="!userAvailable">Username bereits vergeben!</ion-note >
+      </ion-item>
+
+      <label class="pt-4 h6">Passwort</label>
+      <ion-item>
+        <ion-label>Passwort</ion-label>
+        <ion-input placeholder="Passwort eingeben..." ngModel user.password></ion-input>
+        <ion-note slot="error" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</ion-note>
+      </ion-item>
+
+      <label class="pt-4 h6">Passwort wiederholen</label>
+      <ion-item>
+        <ion-label>Passwort wiederholen</ion-label>
+        <ion-input placeholder="Passwort eingeben..."></ion-input>
+        <ion-note slot="error" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</ion-note>
+      </ion-item>
+
+      <button class="mt-5" color="accent" type="submit"
+              [disabled]="isInvalid()">
+        Registrieren
+      </button>
+
+    </div>
+  </form>
+
+

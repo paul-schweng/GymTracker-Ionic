@@ -1,53 +1,66 @@
 
-  <form (ngSubmit)="registerClicked()" class="d-inline-flex justify-content-center w-100 mb-5">
 
-    <div class="d-inline-grid w-75">
+<form (ngSubmit)="registerClicked()" class="d-flex justify-content-center fit-content mb-5">
+  <div [formGroup]="formGroup" class="d-inline-grid">
 
-      <h1 class="d-inline-grid py-4 display-3">
-        Willkommen!
-        <h4 class="pt-4 h4">
-          Hast Du bereits einen Account?
-          <a routerLink="/login">Anmelden</a>
-        </h4>
-      </h1>
+    <h1 class="d-inline-grid py-4 display-3 ion-padding-horizontal">
+      Willkommen!
+      <h4 class="pt-4 h4">
+        Hast Du bereits einen Account?
+        <a routerLink="../login">Anmelden</a>
+      </h4>
+    </h1>
 
 
-      <h6 class="pt-4 h6">Name</h6>
-      <ion-item>
-        <ion-label position="floating">Name</ion-label>
-        <ion-input placeholder="Namen eingeben..." ngModel="user.name"></ion-input>
-        <ion-note slot="error" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</ion-note>
-      </ion-item>
+    <label class="ion-padding-horizontal ion-padding-top h5">Name</label>
+    <ion-item class="">
+      <ion-input placeholder="Namen eingeben..." formControlName="name" required="true"></ion-input>
+    </ion-item>
+    <ion-text *ngIf="formGroup.controls['name'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
+      <small class="small" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</small>
+    </ion-text>
 
-      <label class="pt-4 h6">Username</label>
-      <ion-item>
-        <ion-label>Username</ion-label>
-        <ion-input placeholder="Username eingeben..." ngModel="user.username" name="username" maxlength="20" required="true" ></ion-input>
-        <ion-note slot="error" *ngIf="formGroup.controls['username'].hasError('required')">Darf nicht leer sein!</ion-note>
-        <ion-note slot="error" *ngIf="formGroup.controls['username'].hasError('pattern')">Erlaubte Zeichen: a-z 0-9 . - _</ion-note>
-        <ion-note slot="error" *ngIf="!userAvailable">Username bereits vergeben!</ion-note >
-      </ion-item>
 
-      <label class="pt-4 h6">Passwort</label>
-      <ion-item>
-        <ion-label>Passwort</ion-label>
-        <ion-input placeholder="Passwort eingeben..." ngModel user.password></ion-input>
-        <ion-note slot="error" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</ion-note>
-      </ion-item>
+    <label class="ion-padding-start ion-padding-top h5">Username</label>
+    <ion-item class="">
+      <ion-input placeholder="Username eingeben..." formControlName="username" maxlength="20" required="true" ></ion-input>
+    </ion-item>
+    <ion-text *ngIf="formGroup.controls['username'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
+      <small *ngIf="formGroup.controls['username'].hasError('required')">Darf nicht leer sein!</small>
+      <small *ngIf="formGroup.controls['username'].hasError('pattern')">Erlaubte Zeichen: a-z 0-9 . - _</small>
+      <small *ngIf="!userAvailable">Username bereits vergeben!</small>
+    </ion-text>
 
-      <label class="pt-4 h6">Passwort wiederholen</label>
-      <ion-item>
-        <ion-label>Passwort wiederholen</ion-label>
-        <ion-input placeholder="Passwort eingeben..."></ion-input>
-        <ion-note slot="error" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</ion-note>
-      </ion-item>
 
-      <button class="mt-5" color="accent" type="submit"
-              [disabled]="isInvalid()">
-        Registrieren
-      </button>
+    <label class="ion-padding-horizontal ion-padding-top h5">Passwort</label>
+    <ion-item class="">
+      <ion-input [clearOnEdit]="false" [type]="hide ? 'password' : 'text'" placeholder="Passwort eingeben..." formControlName="password" required="true"></ion-input>
+      <ion-button slot="end" (click)="hide = !hide" fill="clear">
+        <ion-icon size="large" [name]="hide ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
+    <ion-text *ngIf="formGroup.controls['password'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
+      <small *ngIf="formGroup.controls['password'].hasError('required')">Darf nicht leer sein!</small>
+      <small *ngIf="formGroup.controls['password'].hasError('pattern')">Mind. 8 Zeichen</small>
+    </ion-text>
 
-    </div>
-  </form>
+
+    <label class="ion-padding-horizontal ion-padding-top h5">Passwort wiederholen</label>
+    <ion-item class="">
+      <ion-input type="password" placeholder="Passwort wiederholen..." formControlName="passwordRepeat" required="true"></ion-input>
+    </ion-item>
+    <ion-text *ngIf="formGroup.controls['passwordRepeat'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inherit">
+      <small *ngIf="formGroup.controls['passwordRepeat'].hasError('required')">Darf nicht leer sein!</small>
+      <small *ngIf="formGroup.controls['passwordRepeat'].hasError('wrongRepeat')">Passwort stimmt nicht überein</small>
+    </ion-text>
+
+
+    <ion-button class="mt-5" color="success" type="submit"
+            [disabled]="formGroup.invalid">
+      Registrieren
+    </ion-button>
+
+  </div>
+</form>
 
 

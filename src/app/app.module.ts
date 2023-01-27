@@ -23,6 +23,7 @@ import {CommonModule} from "@angular/common";
 import {NotFoundComponent} from "./component/not-found/not-found.component";
 import {SplashScreenWeb} from "@capacitor/splash-screen/dist/esm/web";
 import {toastEnter, toastLeave} from "./functions/toast-animations";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {toastEnter, toastLeave} from "./functions/toast-animations";
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
+    NgbModule,
   ],
   providers: [
     {

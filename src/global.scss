@@ -25,6 +25,10 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+
 
 
 ion-content::part(scroll) {
@@ -64,6 +68,32 @@ ion-toast {
   --border-radius: 15px;
 }
 
-ion-input {
+ion-item.item-input {
+  border-radius: 20px;
+}
+
+ion-item.item-input + ion-text small{
+  font-size: 75%;
+  display: block;
+}
+
+ion-button {
   --border-radius: 10px;
+}
+
+.d-inline-grid{
+  display: inline-grid;
+}
+
+.d-grid{
+  display: grid;
+}
+
+.float-left{
+  float: left;
+}
+
+a {
+  text-decoration: unset;
+  color: var(--ion-color-success);
 }

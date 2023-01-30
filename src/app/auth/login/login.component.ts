@@ -2,46 +2,47 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
+import {LoadingControllerService} from "../../services/loading-controller.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent {
 
-  isBusy: boolean = false;
-  credentials = {
-    username: "", password: ""
-  }
-
+  hide: boolean = true;
   wrongCredentials: boolean = false;
 
   formGroup: FormGroup = new FormGroup({
-    username: new FormControl(''),
+    username: new FormControl(),
+    password: new FormControl(),
   });
 
   constructor(private readonly authService: AuthenticationService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              private readonly loadingCtrl: LoadingControllerService) {
   }
 
 
   loginClicked(){
-    this.isBusy = true;
     this.wrongCredentials = false;
+    this.loadingCtrl.isLoading = true
 
-    this.authService.login(this.credentials)
+    const credentials = {
+      username: this.formGroup.controls['username'].value,
+      password: this.formGroup.controls['password'].value
+    }
+
+    this.authService.login(credentials)
       .then(() => {
         this.router.navigateByUrl('/')
       })
-      .catch(() => {
-        this.wrongCredentials = true;
-      })
-      .finally(() => this.isBusy = false);
+      .catch((error) => {
+        if(error.status == 401)
+          this.wrongCredentials = true;
+      }).finally(() => this.loadingCtrl.isLoading = false)
   }
 
-  ngOnInit(): void {
-    this.formGroup.controls['username'].valueChanges.subscribe(value => this.credentials.username = value);
-  }
 
 }

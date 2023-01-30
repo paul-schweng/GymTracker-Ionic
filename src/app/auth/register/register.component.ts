@@ -11,6 +11,7 @@ import {
 } from "rxjs";
 import {RegisterUser} from "../../models/registerUser";
 import {AuthenticationService} from "../../services/authentication.service";
+import {LoadingControllerService} from "../../services/loading-controller.service";
 
 @Component({
   selector: 'app-register',
@@ -21,9 +22,7 @@ export class RegisterComponent implements OnInit{
 
   hide: boolean = true;
   userAvailable: boolean = true;
-  user: RegisterUser = {
-    name: "", password: "", username: ""
-  };
+
 
   pwdRegex = {
     name: 'min. 8 Zeichen',
@@ -41,7 +40,8 @@ export class RegisterComponent implements OnInit{
 
 
   constructor(private readonly authService: AuthenticationService,
-              private readonly router: Router) {
+              private readonly router: Router,
+              private readonly loadingCtrl: LoadingControllerService) {
     this.formGroup.controls['passwordRepeat'].addValidators(this.repeatedPwdValidator())
   }
 
@@ -54,21 +54,26 @@ export class RegisterComponent implements OnInit{
 
   registerClicked() {
 
-    // this.isBusy = true;
+    this.loadingCtrl.isLoading = true;
 
-    this.authService.register(this.user)
+    const user: RegisterUser = {
+      name: this.formGroup.controls['name'].value,
+      password: this.formGroup.controls['password'].value,
+      username: this.formGroup.controls['username'].value
+    };
+
+    this.authService.register(user)
       .then(() => {
-        this.authService.login({username: this.user.username, password: this.user.password})
+        this.authService.login({username: user.username, password: user.password})
           .then(() =>
               this.router.navigateByUrl('/')
           )
       })
-      // .finally(() => this.isBusy = false);
+      .finally(() => this.loadingCtrl.isLoading = true);
   }
 
 
   ngOnInit(): void {
-    this.formGroup.controls['name'].valueChanges.subscribe(value => this.user.name = value);
     this.formGroup.controls['password'].valueChanges.subscribe(
       () => this.formGroup.controls['passwordRepeat'].updateValueAndValidity()
     );
@@ -76,14 +81,12 @@ export class RegisterComponent implements OnInit{
     this.formGroup.controls['username'].valueChanges.pipe(
       startWith(''),
       map(username => username.toLowerCase().trim()),
-      tap(username => this.user.username = username),
       tap(username => this.formGroup.controls['username'].setValue(username, {emitEvent: false})),
-      tap(u => console.log(u)),
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((username) =>
+      tap((username) =>
         this.authService.isUsernameAvailable(username)
-          .then(available => this.userAvailable = !!available)
+          .then((available: any) => this.userAvailable = available.available)
           .catch(err => console.log(err))
       )
     ).subscribe(a => console.log(a));

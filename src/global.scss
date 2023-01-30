@@ -97,3 +97,19 @@ a {
   text-decoration: unset;
   color: var(--ion-color-success);
 }
+
+.my-alert {
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0.8rem;
+  color: var(--ion-color-danger-contrast);
+  background-color: var(--ion-color-danger-shade);
+}
+
+.is-not-loading ion-progress-bar {
+  display: none;
+}
+
+ion-split-pane {
+  --side-max-width: var(--side-min-width);
+}

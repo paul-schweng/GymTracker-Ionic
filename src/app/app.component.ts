@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {SplashScreen} from "@capacitor/splash-screen";
+import {LoadingControllerService} from "./services/loading-controller.service";
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -15,7 +16,7 @@ export class AppComponent {
     { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {
+  constructor(private readonly loadingCtrl: LoadingControllerService) {
 
   }
 

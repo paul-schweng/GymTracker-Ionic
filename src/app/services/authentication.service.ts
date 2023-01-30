@@ -32,7 +32,7 @@ export class AuthenticationService{
   }
 
   isUsernameAvailable(username: string){
-    return this.iAmService.sendGetRequest(this.backendUrlPath + `/available/${username}`)
+    return this.iAmService.sendGetRequest(this.backendUrlPath + `/available`, {username: username})
   }
 
   isAuthenticated(): boolean {

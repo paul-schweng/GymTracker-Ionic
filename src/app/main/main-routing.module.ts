@@ -12,7 +12,7 @@ import {MealsComponent} from "./components/meals/meals.component";
 
 const routes: Routes = [
   {path: '', component: MainPage, children: [
-      {path: '', component: DashboardComponent},
+      {path: 'dashboard', component: DashboardComponent},
       {path: 'test', component: SidebarComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'calendar', component: CalendarComponent},

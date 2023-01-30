@@ -16,6 +16,9 @@ export class IAmService extends CommunicationRequestService<any>{
 
 
   protected prepareRequestObjectParameter(reqParameter: any): HttpParams {
+    if(reqParameter.username)
+      return new HttpParams().set('username', reqParameter.username);
+
     return new HttpParams();
   }
 

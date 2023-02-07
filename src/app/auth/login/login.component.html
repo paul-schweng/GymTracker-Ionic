@@ -14,24 +14,49 @@
 
 
     <label class="ion-padding-horizontal ion-padding-top h5">Username</label>
-    <ion-item class="">
-      <ion-input placeholder="Username eingeben..." formControlName="username" maxlength="20" required="true" ></ion-input>
-    </ion-item>
-    <ion-text *ngIf="formGroup.controls['username'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
-      <small *ngIf="formGroup.controls['username'].hasError('required')">Darf nicht leer sein!</small>
-    </ion-text>
+
+    <ion-input
+      label="Username"
+      shape="round"
+      fill="outline"
+      label-placement="floating"
+      placeholder="Username eingeben..."
+      formControlName="username"
+      required="true" >
+    </ion-input>
+
+    <div class="ion-margin-bottom ion-padding-start d-inline">
+      <ion-text *ngIf="formGroup.controls['username'].dirty" color="danger" class="">
+        <small *ngIf="formGroup.controls['username'].hasError('required')">Darf nicht leer sein!</small>
+      </ion-text>
+    </div>
+
 
 
     <label class="ion-padding-horizontal ion-padding-top h5">Passwort</label>
-    <ion-item class="">
-      <ion-input [clearOnEdit]="false" [type]="hide ? 'password' : 'text'" placeholder="Passwort eingeben..." formControlName="password" required="true"></ion-input>
-      <ion-button slot="end" (click)="hide = !hide" fill="clear">
-        <ion-icon size="large" [name]="hide ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
-      </ion-button>
-    </ion-item>
-    <ion-text *ngIf="formGroup.controls['password'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
-      <small *ngIf="formGroup.controls['password'].hasError('required')">Darf nicht leer sein!</small>
-    </ion-text>
+    <ion-input
+      class=""
+      label="Passwort"
+      shape="round"
+      fill="outline"
+      label-placement="floating"
+      [clearOnEdit]="false"
+      [type]="hide ? 'password' : 'text'"
+      placeholder="Passwort eingeben..."
+      formControlName="password"
+
+      required="true">
+    </ion-input>
+    <ion-button slot="end" (click)="hide = !hide" fill="clear">
+      <ion-icon size="large" [name]="hide ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+    </ion-button>
+
+    <div class="ion-margin-bottom ion-padding-start d-inline">
+      <ion-text *ngIf="formGroup.controls['password'].dirty" color="danger">
+        <small *ngIf="formGroup.controls['password'].hasError('required')">Darf nicht leer sein!</small>
+      </ion-text>
+    </div>
+
 
 
     <div *ngIf="wrongCredentials" class="my-alert">Falsche Anmeldedaten</div>

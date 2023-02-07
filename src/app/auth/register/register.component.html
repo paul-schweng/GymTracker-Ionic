@@ -16,20 +16,24 @@
     <ion-item class="">
       <ion-input placeholder="Namen eingeben..." formControlName="name" required="true"></ion-input>
     </ion-item>
-    <ion-text *ngIf="formGroup.controls['name'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
-      <small class="small" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</small>
-    </ion-text>
+    <div class="ion-margin-bottom ion-padding-start d-inline">
+      <ion-text *ngIf="formGroup.controls['name'].dirty" color="danger">
+        <small class="small" *ngIf="formGroup.controls['name'].invalid">Darf nicht leer sein!</small>
+      </ion-text>
+    </div>
 
 
     <label class="ion-padding-start ion-padding-top h5">Username</label>
     <ion-item class="">
       <ion-input placeholder="Username eingeben..." formControlName="username" maxlength="20" required="true" ></ion-input>
     </ion-item>
-    <ion-text *ngIf="formGroup.controls['username'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
-      <small *ngIf="formGroup.controls['username'].hasError('required')">Darf nicht leer sein!</small>
-      <small *ngIf="formGroup.controls['username'].hasError('pattern')">Erlaubte Zeichen: a-z 0-9 . - _</small>
-      <small *ngIf="!userAvailable">Username bereits vergeben!</small>
-    </ion-text>
+    <div class="ion-margin-bottom ion-padding-start d-inline">
+      <ion-text *ngIf="formGroup.controls['username'].dirty" color="danger">
+        <small *ngIf="formGroup.controls['username'].hasError('required')" class="d-block">Darf nicht leer sein!</small>
+        <small *ngIf="formGroup.controls['username'].hasError('pattern')" class="d-block">Erlaubte Zeichen: a-z 0-9 . - _</small>
+        <small *ngIf="!userAvailable" class="d-block">Username bereits vergeben!</small>
+      </ion-text>
+    </div>
 
 
     <label class="ion-padding-horizontal ion-padding-top h5">Passwort</label>
@@ -39,24 +43,28 @@
         <ion-icon size="large" [name]="hide ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
       </ion-button>
     </ion-item>
-    <ion-text *ngIf="formGroup.controls['password'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inline">
-      <small *ngIf="formGroup.controls['password'].hasError('required')">Darf nicht leer sein!</small>
-      <small *ngIf="formGroup.controls['password'].hasError('pattern')">Mind. 8 Zeichen</small>
-    </ion-text>
+    <div class="ion-margin-bottom ion-padding-start d-inline">
+      <ion-text *ngIf="formGroup.controls['password'].dirty" color="danger">
+        <small *ngIf="formGroup.controls['password'].hasError('required')" class="d-block">Darf nicht leer sein!</small>
+        <small *ngIf="formGroup.controls['password'].hasError('pattern')" class="d-block">Mind. 8 Zeichen</small>
+      </ion-text>
+    </div>
 
 
     <label class="ion-padding-horizontal ion-padding-top h5">Passwort wiederholen</label>
     <ion-item class="">
       <ion-input type="password" placeholder="Passwort wiederholen..." formControlName="passwordRepeat" required="true"></ion-input>
     </ion-item>
-    <ion-text *ngIf="formGroup.controls['passwordRepeat'].dirty" color="danger" class="ion-padding-start ion-margin-bottom d-inherit">
-      <small *ngIf="formGroup.controls['passwordRepeat'].hasError('required')">Darf nicht leer sein!</small>
-      <small *ngIf="formGroup.controls['passwordRepeat'].hasError('wrongRepeat')">Passwort stimmt nicht überein</small>
-    </ion-text>
+    <div class="ion-margin-bottom ion-padding-start d-inline">
+      <ion-text *ngIf="formGroup.controls['passwordRepeat'].dirty" color="danger">
+        <small *ngIf="formGroup.controls['passwordRepeat'].hasError('required')" class="d-block">Darf nicht leer sein!</small>
+        <small *ngIf="formGroup.controls['passwordRepeat'].hasError('wrongRepeat')" class="d-block">Passwort stimmt nicht überein</small>
+      </ion-text>
+    </div>
 
 
     <ion-button class="mt-5" color="success" type="submit"
-            [disabled]="formGroup.invalid">
+                [disabled]="formGroup.invalid">
       Registrieren
     </ion-button>
 

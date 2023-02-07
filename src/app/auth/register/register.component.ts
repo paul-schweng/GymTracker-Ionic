@@ -82,13 +82,14 @@ export class RegisterComponent implements OnInit{
       startWith(''),
       map(username => username.toLowerCase().trim()),
       tap(username => this.formGroup.controls['username'].setValue(username, {emitEvent: false})),
-      debounceTime(300),
+      debounceTime(400),
       distinctUntilChanged(),
-      tap((username) =>
-        this.authService.isUsernameAvailable(username)
-          .then((available: any) => this.userAvailable = available.available)
-          .catch(err => console.log(err))
-      )
+      tap((username) => {
+        if(username != '')
+          this.authService.isUsernameAvailable(username)
+            .then((available: any) => this.userAvailable = available.available)
+            .catch(err => console.log(err))
+      })
     ).subscribe(a => console.log(a));
 
   }

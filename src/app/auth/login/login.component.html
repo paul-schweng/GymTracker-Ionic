@@ -15,15 +15,13 @@
 
     <label class="ion-padding-horizontal ion-padding-top h5">Username</label>
 
-    <ion-input
-      label="Username"
-      shape="round"
-      fill="outline"
-      label-placement="floating"
-      placeholder="Username eingeben..."
-      formControlName="username"
-      required="true" >
-    </ion-input>
+    <ion-item>
+      <ion-input
+        placeholder="Username eingeben..."
+        formControlName="username"
+        required="true" >
+      </ion-input>
+    </ion-item>
 
     <div class="ion-margin-bottom ion-padding-start d-inline">
       <ion-text *ngIf="formGroup.controls['username'].dirty" color="danger" class="">
@@ -34,22 +32,19 @@
 
 
     <label class="ion-padding-horizontal ion-padding-top h5">Passwort</label>
-    <ion-input
-      class=""
-      label="Passwort"
-      shape="round"
-      fill="outline"
-      label-placement="floating"
-      [clearOnEdit]="false"
-      [type]="hide ? 'password' : 'text'"
-      placeholder="Passwort eingeben..."
-      formControlName="password"
+    <ion-item >
+      <ion-input
+        [clearOnEdit]="false"
+        [type]="hide ? 'password' : 'text'"
+        placeholder="Passwort eingeben..."
+        formControlName="password"
+        required="true">
+      </ion-input>
+      <ion-button slot="end" (click)="hide = !hide" fill="clear">
+        <ion-icon size="large" [name]="hide ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+      </ion-button>
+    </ion-item>
 
-      required="true">
-    </ion-input>
-    <ion-button slot="end" (click)="hide = !hide" fill="clear">
-      <ion-icon size="large" [name]="hide ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
-    </ion-button>
 
     <div class="ion-margin-bottom ion-padding-start d-inline">
       <ion-text *ngIf="formGroup.controls['password'].dirty" color="danger">

@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit{
               this.router.navigateByUrl('/')
           )
       })
-      .finally(() => this.loadingCtrl.isLoading = true);
+      .finally(() => this.loadingCtrl.isLoading = false);
   }
 
 

@@ -73,3 +73,7 @@ ion-item.selected {
 ion-menu-button {
   z-index: 1001;
 }
+
+ion-buttons:has(ion-menu-button) {
+  background:linear-gradient(transparent 150px, white);
+}

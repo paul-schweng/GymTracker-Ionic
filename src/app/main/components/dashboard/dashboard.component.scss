@@ -1,0 +1,13 @@
+
+.dashboard-bg {
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+
+  object-fit: cover;
+}
+
+.content {
+  margin-top: 2rem;
+  padding-top: 70vh;
+}

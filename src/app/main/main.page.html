@@ -24,14 +24,15 @@
 
   <ion-content id="main-content">
     <ion-progress-bar type="indeterminate" color="secondary"></ion-progress-bar>
-    <ion-buttons class="position-sticky">
+    <ion-buttons class="position-fixed w-100 menu-button">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-
-    <ion-grid [fixed]="true">
+    <div class="container">
       <router-outlet></router-outlet>
-    </ion-grid>
+    </div>
+
+
   </ion-content>
 
 </ion-split-pane>

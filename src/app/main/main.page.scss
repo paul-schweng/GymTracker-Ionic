@@ -1,3 +1,7 @@
+body {
+  background: var(--ion-background-color) !important;
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }
@@ -76,4 +80,14 @@ ion-menu-button {
 
 ion-buttons:has(ion-menu-button) {
   background:linear-gradient(transparent 150px, white);
+}
+
+ion-content {
+ --background: url("/assets/bg/dashboard_bg.png") fixed no-repeat top/cover;
+}
+
+ion-grid {
+  padding: unset;
+  max-width: 576px;
+
 }

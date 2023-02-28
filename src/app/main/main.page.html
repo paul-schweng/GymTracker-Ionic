@@ -10,29 +10,29 @@
     <ion-content>
 
 
-        <ion-menu-toggle autoHide="false" *ngFor="let page of sidebarItems; let i = index">
-          <ion-item routerDirection="root" [routerLink]="[page.url]" lines="none" detail="false" routerLinkActive="selected">
-            <ion-icon slot="start" [icon]="page.icon"></ion-icon>
-            <ion-label>{{ page.title }}</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
+      <ion-menu-toggle autoHide="false" *ngFor="let page of sidebarItems; let i = index">
+        <ion-item routerDirection="root" [routerLink]="[page.url]" lines="none" detail="false" routerLinkActive="selected">
+          <ion-icon slot="start" [icon]="page.icon"></ion-icon>
+          <ion-label>{{ page.title }}</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
 
 
     </ion-content>
   </ion-menu>
 
-
-  <ion-content id="main-content">
-    <ion-progress-bar type="indeterminate" color="secondary"></ion-progress-bar>
-    <ion-buttons class="position-fixed w-100 menu-button">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-
-    <div class="container">
-      <router-outlet></router-outlet>
-    </div>
+  <ion-grid id="main-content" [fixed]="true">
+    <ion-content >
+      <ion-progress-bar type="indeterminate" color="secondary"></ion-progress-bar>
+      <ion-buttons class="position-fixed w-100 menu-button">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
 
 
-  </ion-content>
+        <router-outlet></router-outlet>
+
+    </ion-content>
+  </ion-grid>
+
 
 </ion-split-pane>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpHeaders} from "@angular/common/http";
 import {RegisterUser} from "../models/registerUser";
 import {IAmService} from "./i-am.service";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,12 @@ export class AuthenticationService{
   }
 
   isAuthenticated(): boolean {
+    if(!environment.production)
+      return true;
     return !!this.iAmService.iAmUser.username;
   }
 
 }
+
+
+

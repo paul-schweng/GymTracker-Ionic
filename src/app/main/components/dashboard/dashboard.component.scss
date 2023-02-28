@@ -8,6 +8,8 @@
 }
 
 .content {
-  margin-top: 2rem;
-  padding-top: 70vh;
+  margin-top: 70vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 20px 30px rgba(0,0,0,0.8);
+  background-origin: content-box;
 }

@@ -200,6 +200,7 @@
 
   .md body {
     --ion-background-color: #35393b;
+    --bs-body-bg: var(--ion-background-color);
     --ion-background-color-rgb: 18,18,18;
 
     --ion-text-color: #ffffff;

@@ -12,6 +12,7 @@ import {MealsComponent} from "./components/meals/meals.component";
 
 const routes: Routes = [
   {path: '', component: MainPage, children: [
+      {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'test', component: SidebarComponent},
       {path: 'profile', component: ProfileComponent},

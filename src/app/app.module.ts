@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import {
-  Animation,
   AnimationController,
-  createAnimation,
   IonicModule,
   IonicRouteStrategy,
   ToastController
@@ -24,6 +22,7 @@ import {NotFoundComponent} from "./component/not-found/not-found.component";
 import {SplashScreenWeb} from "@capacitor/splash-screen/dist/esm/web";
 import {toastEnter, toastLeave} from "./functions/toast-animations";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxEchartsModule} from "ngx-echarts";
 
 @NgModule({
   declarations: [
@@ -40,6 +39,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     CommonModule,
     NgbModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
   providers: [
     {

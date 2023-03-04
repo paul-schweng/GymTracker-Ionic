@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from "../../environments/default";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main',
@@ -28,7 +29,7 @@ export class MainPage implements OnInit {
     {title: 'Profil', url: '/profile', icon: 'person-sharp'}
   ]
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
   }

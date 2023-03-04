@@ -14,14 +14,16 @@ import {ExercisesComponent} from "./components/exercises/exercises.component";
 import {MealsComponent} from "./components/meals/meals.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {SidebarComponent} from "./components/sidebar/sidebar.component";
+import {NgxEchartsModule} from "ngx-echarts";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MainRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        MainRoutingModule,
+        NgxEchartsModule
+    ],
   declarations: [
     MainPage,
     CalendarComponent,

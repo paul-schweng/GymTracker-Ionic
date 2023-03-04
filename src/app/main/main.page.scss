@@ -82,7 +82,7 @@ ion-buttons:has(ion-menu-button) {
   background:linear-gradient(transparent 150px, white);
 }
 
-ion-content {
+ion-content.dashboard {
  --background: url("/assets/bg/dashboard_bg.png") fixed no-repeat top/cover;
 }
 

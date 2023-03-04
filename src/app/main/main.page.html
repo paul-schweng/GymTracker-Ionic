@@ -22,14 +22,14 @@
   </ion-menu>
 
   <ion-grid id="main-content" [fixed]="true">
-    <ion-content >
+    <ion-content [class.dashboard]="router.url.includes('/dashboard')" >
       <ion-progress-bar type="indeterminate" color="secondary"></ion-progress-bar>
       <ion-buttons class="position-sticky top-0 w-100 menu-button">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
 
 
-        <router-outlet></router-outlet>
+        <ion-router-outlet></ion-router-outlet>
 
     </ion-content>
   </ion-grid>

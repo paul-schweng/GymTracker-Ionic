@@ -57,7 +57,7 @@ ion-radio.radio-checked::part(mark) {
   width: 6px;
   height: 10px;
 
-  border-width: 0px 2px 2px 0px;
+  border-width: 0 2px 2px 0;
   border-style: solid;
   border-color: #fff;
 
@@ -113,4 +113,8 @@ a {
 
 ion-split-pane {
   --side-max-width: var(--side-min-width);
+}
+
+.ion-page {
+  overflow: auto;
 }

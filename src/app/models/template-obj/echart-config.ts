@@ -10,6 +10,7 @@ export const EChartsLineConfig = {
   legend: {
     show: false
   },
+  backgroundColor: 'rgba(0,0,0,0)',
   color: '#ff0000',
   tooltip: {
     trigger: 'axis',
@@ -50,14 +51,14 @@ export const EChartsLineConfig = {
       },
       areaStyle: {
         opacity: 0.8,
-        color: new graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: 'rgb(255, 191, 0)'
-          },
+        color: new graphic.LinearGradient(0, 0, 0.8, 1, [
           {
             offset: 1,
-            color: 'rgb(224, 62, 76)'
+            color: '#f82'
+          },
+          {
+            offset: 0.3,
+            color: '#93d'
           }
         ])
       },

@@ -6,6 +6,7 @@ import * as date from 'date-fns';
 import {IonModal, ViewDidEnter} from "@ionic/angular";
 import {configureEChartLine} from "../../../models/template-obj/echart-config";
 import { OverlayEventDetail } from '@ionic/core/components';
+import {DataService} from "../../../services/data.service";
 
 @Component({
   selector: 'app-data',
@@ -48,7 +49,7 @@ export class DataComponent implements OnInit, ViewDidEnter {
 
 
 
-  constructor() { }
+  constructor(private readonly dataService: DataService) { }
 
   ngOnInit(): void {
   }
@@ -56,15 +57,9 @@ export class DataComponent implements OnInit, ViewDidEnter {
 
   ionViewDidEnter(): void {
 
-    let array = [
-      this.days,
-      [60, 61, 57, 63, 64, 66, 62, 75, 75, 75, 77, 74, 75, 76]
-    ]
-    console.log(array)
-    this.data3 = array[0].map((_, colIndex) => array.map(row => row[colIndex]));
-    console.log(this.data3)
-
-    this.option4 = configureEChartLine('TEST', this.data3,['timestamp', 'my field']);
+    this.dataService.getBodyData().then(data => {
+      this.option4 = configureEChartLine('TEST', data,['timestamp', 'my field']);
+    })
   }
 
 

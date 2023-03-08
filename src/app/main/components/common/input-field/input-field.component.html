@@ -1,0 +1,24 @@
+
+
+<label class="ion-padding-horizontal ion-padding-top h5">{{label}}</label>
+
+
+  <ion-item>
+    <ion-input
+      placeholder="Daten eingeben..."
+      [formControl]="formControl"
+      [inputmode]="'decimal'"
+      [type]="'number'"
+      [min]="0"
+      required="true" >
+    </ion-input>
+    <ion-text slot="end">{{endSlot}}</ion-text>
+  </ion-item>
+
+
+
+<div class="ion-margin-bottom ion-padding-start d-inline">
+  <ion-text *ngIf="formControl.dirty" color="danger" class="">
+    <small *ngIf="formControl.invalid">Gib korrekte Daten ein</small>
+  </ion-text>
+</div>

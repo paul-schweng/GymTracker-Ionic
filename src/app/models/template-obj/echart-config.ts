@@ -15,9 +15,9 @@ export const EChartsLineConfig = {
     trigger: 'axis',
   },
   grid: {
-    left: '40px',
-    right: '30px',
-    bottom: '40px',
+    left: '30px',
+    right: '15px',
+    bottom: '20px',
     top: '35px'
     // containLabel: false
   },

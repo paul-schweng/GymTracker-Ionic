@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -15,15 +15,17 @@ import {MealsComponent} from "./components/meals/meals.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {SidebarComponent} from "./components/sidebar/sidebar.component";
 import {NgxEchartsModule} from "ngx-echarts";
+import {InputFieldComponent} from "./components/common/input-field/input-field.component";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        MainRoutingModule,
-        NgxEchartsModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    MainRoutingModule,
+    NgxEchartsModule,
+    ReactiveFormsModule
+  ],
   declarations: [
     MainPage,
     CalendarComponent,
@@ -33,6 +35,7 @@ import {NgxEchartsModule} from "ngx-echarts";
     MealsComponent,
     ProfileComponent,
     SidebarComponent,
+    InputFieldComponent
   ]
 })
 export class MainModule {}

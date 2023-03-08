@@ -116,5 +116,27 @@ ion-split-pane {
 }
 
 .ion-page {
+  overflow: scroll !important;
+  display: block;
+}
+
+:host(ion-card) {
   overflow: auto;
+}
+
+.top-page-margin {
+  margin-top: 3rem;
+}
+
+/** remove Arrows/Spinners from input field **/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield !important;
 }

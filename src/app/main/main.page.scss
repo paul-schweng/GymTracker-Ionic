@@ -86,9 +86,13 @@ ion-content.dashboard {
  --background: url("/assets/bg/dashboard_bg.png") fixed no-repeat top/cover;
 }
 
+.menu-button {
+  width: fit-content;
+}
 
 ion-grid {
   padding: unset;
   max-width: 576px;
-
 }
+
+

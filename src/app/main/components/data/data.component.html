@@ -1,7 +1,95 @@
-<ion-fab class="d-flex ion-justify-content-center add-data ion-margin-bottom">
-  <ion-fab-button color="success">
+<ion-fab class="d-flex ion-justify-content-center add-data ion-margin-bottom ion-padding">
+  <ion-fab-button id="open-modal" color="success">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
 
-<div echarts [options]="option4" class="chart" ></div>
+<ion-card class="ion-padding">
+  <div echarts [options]="option4" class="chart" ></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="option4" class="chart" ></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="option4" class="chart" ></div>
+</ion-card>
+
+
+
+<ion-modal trigger="open-modal" (willDismiss)="modelOnWillDismiss($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="modelCancel()">
+            <ion-icon [size]="'large'" name="chevron-back"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">Neue Körpermaße</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="modelConfirm()" [strong]="true">
+            <ion-icon [size]="'large'" name="checkmark"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <label class="ion-padding-horizontal ion-padding-top h5">Username</label>
+
+      <ion-item>
+        <ion-input
+          placeholder="Username eingeben..."
+          type="number"
+          required="true" >
+        </ion-input>
+        <ion-text slot="end">kg</ion-text>
+      </ion-item>
+
+
+      <input-field endSlot="kg" label="Gewicht" [(model)]="ngTest" ></input-field>
+
+      <ion-accordion-group>
+        <ion-accordion value="bicep">
+          <ion-item slot="header" color="light">
+            <ion-label>Bizeps</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <input-field class="ion-margin-bottom" endSlot="cm" label="Rechts" [(model)]="ngTest" ></input-field>
+            <input-field endSlot="cm" label="Links" [(model)]="ngTest" ></input-field>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion value="forearm">
+          <ion-item slot="header" color="light">
+            <ion-label>Unterarm</ion-label>
+          </ion-item>
+          <div class="ion-padding d-flex flex-column" slot="content">
+            <input-field endSlot="cm" label="Rechts" [(model)]="ngTest" ></input-field>
+            <input-field endSlot="cm" label="Links" [(model)]="ngTest" ></input-field>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion value="leg">
+          <ion-item slot="header" color="light">
+            <ion-label>Bein</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <input-field endSlot="cm" label="Rechts" [(model)]="ngTest" ></input-field>
+            <input-field endSlot="cm" label="Links" [(model)]="ngTest" ></input-field>
+          </div>
+        </ion-accordion>
+
+
+
+      </ion-accordion-group>
+
+      <input-field endSlot="cm" label="Schultern" [(model)]="ngTest" ></input-field>
+      <input-field endSlot="cm" label="Brust" [(model)]="ngTest" ></input-field>
+      <input-field endSlot="cm" label="Taille" [(model)]="ngTest" ></input-field>
+      <input-field endSlot="cm" label="Hüfte" [(model)]="ngTest" ></input-field>
+
+
+
+    </ion-content>
+  </ng-template>
+</ion-modal>

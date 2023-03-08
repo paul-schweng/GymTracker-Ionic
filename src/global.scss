@@ -116,8 +116,12 @@ ion-split-pane {
 }
 
 .ion-page {
-  overflow: scroll !important;
+  // overflow: scroll !important;
   display: block;
+}
+
+ion-router-outlet .ion-page {
+  overflow: auto;
 }
 
 :host(ion-card) {

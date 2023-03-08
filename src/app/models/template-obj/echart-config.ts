@@ -1,17 +1,14 @@
 import {EChartsOption, graphic} from "echarts";
+import {BodyData, TimeSeriesData} from "../body-data";
 
 export const EChartsLineConfig = {
   title: {
     text: '',
-    textStyle: {
-      color: '#ffffff'
-    }
   },
   legend: {
     show: false
   },
   backgroundColor: 'rgba(0,0,0,0)',
-  color: '#ff0000',
   tooltip: {
     trigger: 'axis',
   },
@@ -26,6 +23,7 @@ export const EChartsLineConfig = {
     source: [],
     dimensions: [],
   },
+
   xAxis: {
     type: 'time',
     axisLabel: {
@@ -35,7 +33,7 @@ export const EChartsLineConfig = {
   yAxis: { min: ''},
   series: [
     {
-      labelLayout: { hideOverlap: true },
+      //labelLayout: { hideOverlap: true },
       type: 'line',
       smooth: true,
       encode: {
@@ -66,12 +64,12 @@ export const EChartsLineConfig = {
 } as const;
 
 
-export function configureEChartLine(title: string, data: any[], dimensions: string[]): EChartsOption{
+export function configureEChartLine(title: string, data: TimeSeriesData, dimensions: string[]): EChartsOption{
   let config = JSON.parse(JSON.stringify(EChartsLineConfig)) as EChartsOption;
   config.title!['text'] = title;
-  config.yAxis!['min'] = (val) => val.min - (val.max - val.min)*0.15;
+  config.yAxis!['min'] = (val) => val.min - Math.floor((val.max - val.min)*0.15);
   config.series!['encode'] = {x: dimensions[0], y: dimensions[1]};
-  config.dataset = {source: data, dimensions: dimensions};
+  config.dataset = {source: data as any, dimensions: dimensions};
 
   return config;
 }

@@ -5,13 +5,13 @@
 </ion-fab>
 
 <ion-card class="ion-padding">
-  <div echarts [options]="option4" class="chart" [theme]="'dark'"></div>
+  <div echarts [options]="chartOptions.bicep.right || {}" class="chart" [theme]="'dark'"></div>
 </ion-card>
 <ion-card class="ion-padding">
-  <div echarts [options]="option4" class="chart" [theme]="'dark'"></div>
+  <div echarts [options]="chartOptions.bicep.left || {}" class="chart" [theme]="'dark'"></div>
 </ion-card>
 <ion-card class="ion-padding">
-  <div echarts [options]="option4" class="chart" [theme]="'dark'"></div>
+  <div echarts [options]="chartOptions.weight || {}" class="chart" [theme]="'dark'"></div>
 </ion-card>
 
 

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {BodyData, TimeSeriesData} from "../../../models/body-data";
+import {BodyData, BodyDataEChartOption, bodyDataToEChartOptions, TimeSeriesData} from "../../../models/body-data";
 import {EChartsOption} from "echarts";
 import {add} from 'date-fns';
 import * as date from 'date-fns';
@@ -35,7 +35,9 @@ export class DataComponent implements OnInit, ViewDidEnter {
     shoulders: [],
     waist: [],
     weight: []
-  }
+  };
+
+  chartOptions: BodyDataEChartOption = {};
 
 
   test: TimeSeriesData = [
@@ -55,11 +57,13 @@ export class DataComponent implements OnInit, ViewDidEnter {
   }
 
 
-  ionViewDidEnter(): void {
+  async ionViewDidEnter() {
 
-    this.dataService.getBodyData().then(data => {
-      this.option4 = configureEChartLine('TEST', data,['timestamp', 'my field']);
-    })
+    let data = await this.dataService.getBodyData();
+
+
+
+    this.chartOptions = bodyDataToEChartOptions(data);
   }
 
 

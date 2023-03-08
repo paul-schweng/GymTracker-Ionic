@@ -4,7 +4,7 @@ import {HttpParams} from "@angular/common/http";
 import * as date from "date-fns";
 import {rotateArrayClockwise} from "../helper/rotateArray";
 import {lastValueFrom, of} from "rxjs";
-import {BodyData} from "../models/body-data";
+import {BodyData, TimeSeriesData} from "../models/body-data";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class DataService extends CommunicationRequestService<any>{
     return new HttpParams();
   }
 
-  private createMockData(): Promise<BodyData>{
+  private createMockData(): TimeSeriesData {
     let days: string[] = date.eachWeekOfInterval({
       start: new Date(),
       end: date.add(new Date(), {days: 6*6*2 +3})})
@@ -23,14 +23,28 @@ export class DataService extends CommunicationRequestService<any>{
     let dataPoints = Array.from({length: 14}, () => Math.floor(Math.random() * 30) + 50);
       //[60, 61, 57, 63, 64, 66, 62, 75, 75, 75, 77, 74, 75, 76];
 
-    let array = [days, dataPoints]
-
-    let data = rotateArrayClockwise(array);
-    return lastValueFrom(of(data));
+    let array = [days, dataPoints];
+    return rotateArrayClockwise(array);
   }
 
-  getBodyData(){
-    return this.createMockData();
+
+
+  getBodyData(): Promise<BodyData> {
+    let newData: BodyData = {
+      bicep: {right: [], left: []},
+      breast: [],
+      forearm: {right: [], left: []},
+      hip: [],
+      leg: {right: [], left: []},
+      shoulders: [],
+      waist: [],
+      weight: []
+    };
+
+    newData.bicep.right = this.createMockData();
+    newData.bicep.left = this.createMockData();
+    newData.weight = this.createMockData();
+    return lastValueFrom(of(newData));
   }
 
 }

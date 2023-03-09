@@ -1,5 +1,6 @@
 import {EChartsOption} from "echarts";
 import {configureEChartLine} from "./template-obj/echart-config";
+import * as date from 'date-fns';
 
 export interface BodyData {
   weight: TimeSeriesData
@@ -30,9 +31,9 @@ export interface BodyDataEChartOption {
   waist?: EChartsOption
   shoulders?: EChartsOption
 
-  bicep?: RightLeftEChartOption
-  forearm?: RightLeftEChartOption
-  leg?: RightLeftEChartOption
+  bicep: RightLeftEChartOption
+  forearm: RightLeftEChartOption
+  leg: RightLeftEChartOption
 }
 
 interface RightLeftEChartOption {
@@ -45,36 +46,60 @@ export const translationMap = new Map<string, string>([
   ['bicep', 'Bizeps'],
   ['right', 'rechts'],
   ['left', 'links'],
+  ['breast', 'Brust'],
+  ['hip', 'Hüfte'],
+  ['waist', 'Taille'],
+  ['shoulders', 'Schultern'],
+  ['forearm', 'Unterarm'],
+  ['leg', 'Bein'],
 ])
 
-export function bodyDataToEChartOptions(data: BodyData){
-  let options: BodyDataEChartOption = {
-    breast: undefined,
-    hip: undefined,
-    shoulders: undefined,
-    waist: undefined,
-    weight: undefined,
-    bicep: {right: undefined, left: undefined},
-    forearm: {right: undefined, left: undefined},
-    leg: {right: undefined, left: undefined}
-  }
+export function bodyDataToEChartOptions(data: BodyData, name = '', options: any = {...data}){
 
-  Object.keys(options).forEach(key => {
+  Object.keys(data).forEach(key => {
     if (data.hasOwnProperty(key)) {
-      const targetValue = options[key];
       const sourceValue = data[key];
-      if (typeof targetValue === 'object' && typeof sourceValue === 'object') {
-        bodyDataToEChartOptions(sourceValue);
+      // console.log(sourceValue)
+
+      if (typeof sourceValue === 'object' && !Array.isArray(sourceValue)) {
+        bodyDataToEChartOptions(sourceValue, key, options[key]);
       } else {
-        // let name = translationMap.get
-        options[key] = configureEChartLine('TEST', sourceValue, ['timestamp', 'my field']);
+        let title = name ? translationMap.get(name) + ' ' + translationMap.get(key) : translationMap.get(key);
+        let chartTitle = sourceValue.length > 0 && title ? title : 'Oops, das hat nicht funktioniert';
+        options[key] = configureEChartLine(chartTitle,
+          sourceValue,
+          ['timestamp', title ?? 'Error']);
       }
     }
   });
 
-  debugger
   return options;
+}
 
+export function rawBodyDataToBodyData(data, bodyData?){
+  if(!bodyData){
+    bodyData = structuredClone(data);
+  }
+
+  Object.keys(data).forEach(key => {
+    if (data.hasOwnProperty(key)) {
+      const sourceValue = data[key];
+      // console.log(sourceValue)
+
+      if (typeof sourceValue === 'object' && !Array.isArray(sourceValue)) {
+        rawBodyDataToBodyData(sourceValue, bodyData[key]);
+      } else {
+        if(!sourceValue || sourceValue < 0 || typeof sourceValue != 'string'){
+          console.log('inside error')
+          throw new Error()
+        }
+
+        bodyData[key] = [date.formatISO(new Date(), { representation: 'date' }), sourceValue];
+      }
+    }
+  });
+
+  return bodyData;
 }
 
 

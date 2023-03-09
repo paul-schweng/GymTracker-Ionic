@@ -10,6 +10,9 @@ import {BodyData, TimeSeriesData} from "../models/body-data";
   providedIn: 'root'
 })
 export class DataService extends CommunicationRequestService<any>{
+
+  private readonly backendUrlPath: string = 'data';
+
   protected prepareRequestObjectParameter(reqParameter: any): HttpParams {
     return new HttpParams();
   }
@@ -45,6 +48,12 @@ export class DataService extends CommunicationRequestService<any>{
     newData.bicep.left = this.createMockData();
     newData.weight = this.createMockData();
     return lastValueFrom(of(newData));
+
+    // return super.sendGetRequest(this.backendUrlPath);
   }
 
+
+  postNewData(data: BodyData) {
+    return super.sendPostRequest(this.backendUrlPath, data)
+  }
 }

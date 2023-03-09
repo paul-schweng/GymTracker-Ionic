@@ -10,14 +10,14 @@
       [inputmode]="'decimal'"
       [type]="'number'"
       [min]="0"
-      required="true" >
+      required="true">
     </ion-input>
     <ion-text slot="end">{{endSlot}}</ion-text>
   </ion-item>
 
 
 
-<div class="ion-margin-bottom ion-padding-start d-inline">
+<div class="ion-margin-bottom ion-padding-start d-block">
   <ion-text *ngIf="formControl.dirty" color="danger" class="">
     <small *ngIf="formControl.invalid">Gib korrekte Daten ein</small>
   </ion-text>

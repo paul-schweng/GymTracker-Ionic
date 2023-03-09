@@ -115,11 +115,6 @@ ion-split-pane {
   --side-max-width: var(--side-min-width);
 }
 
-.ion-page {
-  // overflow: scroll !important;
-  display: block;
-}
-
 ion-router-outlet .ion-page {
   overflow: auto;
 }

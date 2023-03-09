@@ -5,18 +5,43 @@
 </ion-fab>
 
 <ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.bicep.right || {}" class="chart" [theme]="'dark'"></div>
+  <div echarts [options]="chartOptions.weight || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
 </ion-card>
 <ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.bicep.left || {}" class="chart" [theme]="'dark'"></div>
+  <div echarts [options]="chartOptions.shoulders || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
 </ion-card>
 <ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.weight || {}" class="chart" [theme]="'dark'"></div>
+  <div echarts [options]="chartOptions.bicep.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.bicep.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.forearm.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.forearm.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.breast || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.waist || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.hip || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.leg.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+</ion-card>
+<ion-card class="ion-padding">
+  <div echarts [options]="chartOptions.leg.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
 </ion-card>
 
 
 
-<ion-modal trigger="open-modal" (willDismiss)="modelOnWillDismiss($event)">
+
+<ion-modal trigger="open-modal" [keepContentsMounted]="true">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -34,60 +59,46 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <label class="ion-padding-horizontal ion-padding-top h5">Username</label>
-
-      <ion-item>
-        <ion-input
-          placeholder="Username eingeben..."
-          type="number"
-          required="true" >
-        </ion-input>
-        <ion-text slot="end">kg</ion-text>
-      </ion-item>
 
 
-      <input-field endSlot="kg" label="Gewicht" [(model)]="ngTest" ></input-field>
+      <input-field endSlot="kg" label="Gewicht" [(model)]="rawNewData.weight" ></input-field>
+      <input-field endSlot="cm" label="Schultern" [(model)]="rawNewData.shoulders" ></input-field>
+      <input-field endSlot="cm" label="Brust" [(model)]="rawNewData.breast" ></input-field>
+      <input-field endSlot="cm" label="Taille" [(model)]="rawNewData.waist" ></input-field>
+      <input-field endSlot="cm" label="Hüfte" [(model)]="rawNewData.hip" ></input-field>
+
 
       <ion-accordion-group>
         <ion-accordion value="bicep">
-          <ion-item slot="header" color="light">
+          <ion-item slot="header" color="primary">
             <ion-label>Bizeps</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
-            <input-field class="ion-margin-bottom" endSlot="cm" label="Rechts" [(model)]="ngTest" ></input-field>
-            <input-field endSlot="cm" label="Links" [(model)]="ngTest" ></input-field>
+            <input-field class="ion-margin-bottom" endSlot="cm" label="Rechts" [(model)]="rawNewData.bicep.right" ></input-field>
+            <input-field endSlot="cm" label="Links" [(model)]="rawNewData.bicep.left" ></input-field>
           </div>
         </ion-accordion>
 
         <ion-accordion value="forearm">
-          <ion-item slot="header" color="light">
+          <ion-item slot="header" color="primary">
             <ion-label>Unterarm</ion-label>
           </ion-item>
           <div class="ion-padding d-flex flex-column" slot="content">
-            <input-field endSlot="cm" label="Rechts" [(model)]="ngTest" ></input-field>
-            <input-field endSlot="cm" label="Links" [(model)]="ngTest" ></input-field>
+            <input-field endSlot="cm" label="Rechts" [(model)]="rawNewData.forearm.right" ></input-field>
+            <input-field endSlot="cm" label="Links" [(model)]="rawNewData.forearm.left" ></input-field>
           </div>
         </ion-accordion>
 
         <ion-accordion value="leg">
-          <ion-item slot="header" color="light">
+          <ion-item slot="header" color="primary">
             <ion-label>Bein</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
-            <input-field endSlot="cm" label="Rechts" [(model)]="ngTest" ></input-field>
-            <input-field endSlot="cm" label="Links" [(model)]="ngTest" ></input-field>
+            <input-field endSlot="cm" label="Rechts" [(model)]="rawNewData.leg.right" ></input-field>
+            <input-field endSlot="cm" label="Links" [(model)]="rawNewData.leg.left" ></input-field>
           </div>
         </ion-accordion>
-
-
-
       </ion-accordion-group>
-
-      <input-field endSlot="cm" label="Schultern" [(model)]="ngTest" ></input-field>
-      <input-field endSlot="cm" label="Brust" [(model)]="ngTest" ></input-field>
-      <input-field endSlot="cm" label="Taille" [(model)]="ngTest" ></input-field>
-      <input-field endSlot="cm" label="Hüfte" [(model)]="ngTest" ></input-field>
-
 
 
     </ion-content>

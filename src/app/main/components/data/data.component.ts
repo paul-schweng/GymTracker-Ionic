@@ -8,6 +8,7 @@ import {
 import {IonModal, ViewDidEnter} from "@ionic/angular";
 import {DataService} from "../../../services/data.service";
 import {NotificationService} from "../../../services/notification.service";
+import {LoadingControllerService} from "../../../services/loading-controller.service";
 
 @Component({
   selector: 'app-data',
@@ -43,7 +44,10 @@ export class DataComponent implements OnInit, ViewDidEnter {
 
 
   constructor(private readonly dataService: DataService,
-              private readonly notificationService: NotificationService) { }
+              private readonly notificationService: NotificationService,
+              private readonly loadingControllerService: LoadingControllerService) {
+    this.loadingControllerService.isLoading = true;
+  }
 
   ngOnInit(): void {
   }
@@ -53,6 +57,7 @@ export class DataComponent implements OnInit, ViewDidEnter {
 
     let data = await this.dataService.getBodyData();
     this.chartOptions = bodyDataToEChartOptions(data);
+    this.loadingControllerService.isLoading = false;
   }
 
 

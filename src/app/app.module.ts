@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -56,6 +56,10 @@ import {NgxEchartsModule} from "ngx-echarts";
       useFactory: initApp,
       multi: true,
       deps: [AuthenticationService]
+    },{
+      provide: LOCALE_ID,
+      // useFactory: (getMyLocale) // can be async
+      useValue: 'de' // if you want to hardcode it
     },
     AuthGuard,
     MainGuard,

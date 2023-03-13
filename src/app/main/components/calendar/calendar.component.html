@@ -1,9 +1,38 @@
 <div class="top-page-margin"></div>
-<ion-datetime-button datetime="date"></ion-datetime-button>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-datetime-button datetime="startDate"></ion-datetime-button>
+    </ion-col>
+    <ion-col>
+      <ion-datetime-button datetime="endDate"></ion-datetime-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
 
 <ion-modal [keepContentsMounted]="true">
   <ng-template>
-    <ion-datetime class="date-picker" color="danger" presentation="date" id="date"></ion-datetime>
+    <ion-datetime firstDayOfWeek="1"
+                  [isDateEnabled]="isDateEnabledStartDate"
+                  (ionChange)="selectStartDate($event)"
+                  class="date-picker"
+                  color="danger"
+                  presentation="date"
+                  id="startDate">
+    </ion-datetime>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime firstDayOfWeek="1"
+                  [isDateEnabled]="isDateEnabledEndDate"
+                  (ionChange)="selectEndDate($event)"
+                  class="date-picker"
+                  color="danger"
+                  presentation="date"
+                  id="endDate">
+    </ion-datetime>
   </ng-template>
 </ion-modal>

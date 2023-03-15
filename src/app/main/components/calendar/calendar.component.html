@@ -1,5 +1,17 @@
 <div class="top-page-margin"></div>
-<ion-grid>
+<ion-grid [fixed]="true">
+  <ion-row>
+    <ion-col>
+      <ion-text>
+        Wähle eine Zeitspanne
+      </ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <full-calendar [options]="calendarOptions" class=""></full-calendar>
+    </ion-col>
+  </ion-row>
   <ion-row>
     <ion-col>
       <ion-datetime-button datetime="startDate"></ion-datetime-button>
@@ -11,28 +23,3 @@
 </ion-grid>
 
 
-<ion-modal [keepContentsMounted]="true">
-  <ng-template>
-    <ion-datetime firstDayOfWeek="1"
-                  [isDateEnabled]="isDateEnabledStartDate"
-                  (ionChange)="selectStartDate($event)"
-                  class="date-picker"
-                  color="danger"
-                  presentation="date"
-                  id="startDate">
-    </ion-datetime>
-  </ng-template>
-</ion-modal>
-
-<ion-modal [keepContentsMounted]="true">
-  <ng-template>
-    <ion-datetime firstDayOfWeek="1"
-                  [isDateEnabled]="isDateEnabledEndDate"
-                  (ionChange)="selectEndDate($event)"
-                  class="date-picker"
-                  color="danger"
-                  presentation="date"
-                  id="endDate">
-    </ion-datetime>
-  </ng-template>
-</ion-modal>

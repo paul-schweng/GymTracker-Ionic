@@ -16,16 +16,19 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {SidebarComponent} from "./components/sidebar/sidebar.component";
 import {NgxEchartsModule} from "ngx-echarts";
 import {InputFieldComponent} from "./components/common/input-field/input-field.component";
+import {FullCalendarModule} from "@fullcalendar/angular";
+import {BaseModalComponent} from "./components/common/base-modal/base-modal.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MainRoutingModule,
-    NgxEchartsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        MainRoutingModule,
+        NgxEchartsModule,
+        ReactiveFormsModule,
+        FullCalendarModule
+    ],
   declarations: [
     MainPage,
     CalendarComponent,
@@ -35,7 +38,8 @@ import {InputFieldComponent} from "./components/common/input-field/input-field.c
     MealsComponent,
     ProfileComponent,
     SidebarComponent,
-    InputFieldComponent
+    InputFieldComponent,
+    BaseModalComponent
   ]
 })
 export class MainModule {}

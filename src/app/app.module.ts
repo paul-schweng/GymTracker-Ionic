@@ -23,6 +23,7 @@ import {SplashScreenWeb} from "@capacitor/splash-screen/dist/esm/web";
 import {toastEnter, toastLeave} from "./functions/toast-animations";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxEchartsModule} from "ngx-echarts";
+import {FullCalendarModule} from "@fullcalendar/angular";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {NgxEchartsModule} from "ngx-echarts";
     }),
     AppRoutingModule,
     HttpClientModule,
+    FullCalendarModule,
     CommonModule,
     NgbModule,
     NgxEchartsModule.forRoot({
@@ -56,10 +58,6 @@ import {NgxEchartsModule} from "ngx-echarts";
       useFactory: initApp,
       multi: true,
       deps: [AuthenticationService]
-    },{
-      provide: LOCALE_ID,
-      // useFactory: (getMyLocale) // can be async
-      useValue: 'de' // if you want to hardcode it
     },
     AuthGuard,
     MainGuard,

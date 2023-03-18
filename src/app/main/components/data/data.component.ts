@@ -62,7 +62,7 @@ export class DataComponent implements OnInit, ViewDidEnter {
 
 
   modelCancel() {
-    this.modal.dismiss(null, 'cancel');
+    this.modal.dismiss();
   }
 
   modelConfirm() {

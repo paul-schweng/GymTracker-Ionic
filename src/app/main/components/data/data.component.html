@@ -4,7 +4,7 @@
   </ion-fab-button>
 </ion-fab>
 
-<ion-card class="ion-padding">
+<ion-card color="primary" class="ion-padding">
   <div echarts [options]="chartOptions.weight || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
 </ion-card>
 <ion-card class="ion-padding">
@@ -47,7 +47,7 @@
       <ion-toolbar>
         <ion-buttons slot="start">
           <ion-button (click)="modelCancel()">
-            <ion-icon [size]="'large'" name="chevron-back"></ion-icon>
+            <ion-icon [size]="'large'" name="close-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
         <ion-title class="ion-text-center">Neue Körpermaße</ion-title>
@@ -70,7 +70,7 @@
 
       <ion-accordion-group>
         <ion-accordion value="bicep">
-          <ion-item slot="header" color="primary">
+          <ion-item slot="header" color="">
             <ion-label>Bizeps</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
@@ -80,7 +80,7 @@
         </ion-accordion>
 
         <ion-accordion value="forearm">
-          <ion-item slot="header" color="primary">
+          <ion-item slot="header" color="">
             <ion-label>Unterarm</ion-label>
           </ion-item>
           <div class="ion-padding d-flex flex-column" slot="content">
@@ -90,7 +90,7 @@
         </ion-accordion>
 
         <ion-accordion value="leg">
-          <ion-item slot="header" color="primary">
+          <ion-item slot="header" color="">
             <ion-label>Bein</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">

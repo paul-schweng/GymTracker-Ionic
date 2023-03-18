@@ -18,6 +18,10 @@ import {NgxEchartsModule} from "ngx-echarts";
 import {InputFieldComponent} from "./components/common/input-field/input-field.component";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import {BaseModalComponent} from "./components/common/base-modal/base-modal.component";
+import {AddTimeSpanComponent} from "./components/calendar/add-time-span/add-time-span.component";
+import {AddTrainingPlanComponent} from "./components/calendar/add-training-plan/add-training-plan.component";
+import {ExerciseComponent} from "./components/common/exercise/exercise.component";
+import {ClickStopPropagationDirective} from "./directives/click-stop-propagation.directive";
 
 @NgModule({
     imports: [
@@ -39,7 +43,11 @@ import {BaseModalComponent} from "./components/common/base-modal/base-modal.comp
     ProfileComponent,
     SidebarComponent,
     InputFieldComponent,
-    BaseModalComponent
+    BaseModalComponent,
+    AddTimeSpanComponent,
+    AddTrainingPlanComponent,
+    ExerciseComponent,
+    ClickStopPropagationDirective,
   ]
 })
 export class MainModule {}

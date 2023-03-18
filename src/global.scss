@@ -139,3 +139,13 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield !important;
 }
+
+ion-accordion::part(content) {
+  padding-top: 3rem;
+  margin-top: -3rem;
+  background: rgba(10,10,10,0.5);
+}
+
+ion-progress-bar {
+  z-index: 99999;
+}

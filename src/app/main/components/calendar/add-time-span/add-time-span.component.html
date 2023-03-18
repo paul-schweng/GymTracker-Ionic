@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="modelClose()">
+        <ion-icon [size]="'large'" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Zeitspanne angeben</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!canNavigate()">
+        <ion-nav-link router-direction="forward" [component]="addTrainingPlan" [componentProps]="{trainingPlan: trainingPlan}">
+          <ion-icon [size]="'large'" name="arrow-forward-outline"></ion-icon>
+        </ion-nav-link>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+  <input-field [label]="'Dauer'" endSlot="Wochen" [FormControl]="formControl" [(model)]="trainingPlan.duration"></input-field>
+
+  <ion-card color="primary" class="ion-padding m-0">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+
+  </ion-card>
+
+</ion-content>

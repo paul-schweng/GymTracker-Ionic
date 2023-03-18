@@ -37,9 +37,8 @@ export class AuthenticationService{
   }
 
   isAuthenticated(): boolean {
-    if(!environment.production)
-      return true;
-    return !!this.iAmService.iAmUser.username;
+    // TODO: change this to '!!'
+    return !this.iAmService.iAmUser.username;
   }
 
 }

@@ -6,9 +6,9 @@
   <ion-item>
     <ion-input
       placeholder="Daten eingeben..."
-      [formControl]="formControl"
-      [inputmode]="'decimal'"
-      [type]="'number'"
+      [formControl]="FormControl"
+      [inputmode]="type == 'number'? 'decimal' : ''"
+      [type]="type"
       [min]="0"
       required="true">
     </ion-input>
@@ -18,7 +18,7 @@
 
 
 <div class="ion-margin-bottom ion-padding-start d-block">
-  <ion-text *ngIf="formControl.dirty" color="danger" class="">
-    <small *ngIf="formControl.invalid">Gib korrekte Daten ein</small>
+  <ion-text *ngIf="FormControl.dirty" color="danger" class="">
+    <small *ngIf="FormControl.invalid">Gib korrekte Daten ein</small>
   </ion-text>
 </div>

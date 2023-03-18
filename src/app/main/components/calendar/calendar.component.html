@@ -1,25 +1,15 @@
-<div class="top-page-margin"></div>
-<ion-grid [fixed]="true">
-  <ion-row>
-    <ion-col>
-      <ion-text>
-        Wähle eine Zeitspanne
-      </ion-text>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <full-calendar [options]="calendarOptions" class=""></full-calendar>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-datetime-button datetime="startDate"></ion-datetime-button>
-    </ion-col>
-    <ion-col>
-      <ion-datetime-button datetime="endDate"></ion-datetime-button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+
+<div>
+
+  <ion-fab class="d-flex ion-justify-content-center add-data ion-margin-bottom ion-padding">
+    <ion-fab-button (click)="addTrainingPlan()" color="success">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 
+  <ion-card color="primary" class="ion-padding">
+    <full-calendar [options]="calendarOptions" class=""></full-calendar>
+  </ion-card>
+
+</div>

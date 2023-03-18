@@ -1,0 +1,30 @@
+/*
+ion-item-group {
+  ion-item-divider {
+    --color: var(--ion-color-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+
+    ion-label {
+      font-size: 1rem;
+    }
+
+    ion-button {
+      --padding: 4px;
+    }
+  }
+}
+ */
+
+.exercise ion-accordion::part(content) {
+  padding-top: 3rem;
+  margin-top: -3rem;
+  background: linear-gradient(40deg, rgba(39,3,93,1) 0%, rgba(89,5,86,1) 100%);
+  // linear-gradient(170deg, rgba(92,0,103,1) 0%, rgba(8,76,113,1) 100%);
+  border-radius: 20px;
+}
+
+.exercise ion-accordion:last-child {
+  margin-bottom: unset;
+}

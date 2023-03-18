@@ -10,23 +10,28 @@ export class InputFieldComponent implements OnInit {
 
   @Input() label: string = "";
   @Input() endSlot: string = "";
-  @Input() type: string = "";
+  @Input() type: string = 'number';
 
 
   @Input() set model(val){
-    this.formControl.setValue(val)
+    this.FormControl.setValue(val)
   };
   @Output() modelChange = new EventEmitter<any>();
 
+  @Output() isInvalid = new EventEmitter<boolean>();
 
-  formControl = new FormControl()
+
+  @Input() FormControl = new FormControl()
 
 
 
   constructor() { }
 
   ngOnInit() {
-    this.formControl.valueChanges.subscribe(val => this.modelChange.emit(val))
+    this.FormControl.valueChanges.subscribe(val => {
+      this.modelChange.emit(val);
+      this.isInvalid.emit(this.FormControl.invalid);
+    })
   }
 
 }

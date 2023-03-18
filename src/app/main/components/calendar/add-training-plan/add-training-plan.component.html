@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Wähle Übungen</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveTrainingPlan()">
+        <ion-icon [size]="'large'" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <ion-accordion-group>
+
+    <ion-accordion *ngFor="let day of weekDays; let i = index" [value]="day">
+      <ion-item slot="header">
+        <ion-label>{{day}}</ion-label>
+        <ion-icon *ngIf="!exercises[i] || exercises[i].length < 1" name="time" slot="start" color="warning"></ion-icon>
+        <ion-buttons>
+          <ion-button (click)="addExercise(i)" click-stop-propagation>
+            <ion-icon color="success" size="large" name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+      </ion-item>
+
+      <div class="ion-padding" slot="content">
+        <ion-accordion-group class="exercise">
+          <ion-accordion *ngFor="let exercise of exercises[i]; let j = index" class="ion-margin-bottom">
+            <ion-item slot="header" lines="none">
+              <ion-input [(ngModel)]="exercise.name" placeholder="Name der Übung" click-stop-propagation></ion-input>
+              <ion-icon name="trash" slot="start" color="danger" (click)="removeExercise(i, j)"></ion-icon>
+            </ion-item>
+
+            <div slot="content" class="ion-padding-start ion-padding-end">
+              <input-field [(model)]="exercise.reps" label="Wiederholungen"></input-field>
+              <input-field [(model)]="exercise.sets" label="Sätze"></input-field>
+
+              <label class="ion-padding-horizontal ion-padding-top h5">
+                Gewicht
+                <ion-note>(optional)</ion-note>
+              </label>
+              <ion-item class="ion-margin-bottom">
+                <ion-input
+                  placeholder="Daten eingeben..."
+                  [inputmode]="'decimal'"
+                  [type]="'number'"
+                  [min]="0"
+                  [(ngModel)]="exercise.weight">
+                </ion-input>
+                <ion-text slot="end">kg</ion-text>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+
+    </ion-accordion>
+
+  </ion-accordion-group>
+
+</ion-content>

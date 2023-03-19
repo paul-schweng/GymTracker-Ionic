@@ -11,6 +11,8 @@ import {BaseModalComponent} from "../common/base-modal/base-modal.component";
 import {AddTimeSpanComponent} from "./add-time-span/add-time-span.component";
 import {TrainingPlanService} from "../../../services/training-plan.service";
 import {TrainingPlan} from "../../../models/training-plan";
+import {ExercisesComponent} from "../exercises/exercises.component";
+import {ExerciseComponent} from "../common/exercise/exercise.component";
 
 @Component({
   selector: 'app-calendar',
@@ -19,7 +21,6 @@ import {TrainingPlan} from "../../../models/training-plan";
 })
 export class CalendarComponent implements OnInit {
 
-  interval: {start: any, end: any} = {start: null, end: null};
 
   trainingPlans: TrainingPlan[] = [];
 
@@ -29,7 +30,7 @@ export class CalendarComponent implements OnInit {
     locale: deLocale,
     fixedWeekCount: false,
     height: '500px',
-    eventClick: this.calendarEventClicked,
+    dateClick: info => this.calendarEventClicked(info),
     selectable: true,
     select: this.calendarSelected,
     selectMirror: true
@@ -41,9 +42,36 @@ export class CalendarComponent implements OnInit {
     this.calendar.getApi().updateSize();
   }
 
-  calendarEventClicked(info) {
+  async calendarEventClicked(info) {
+    // Get the clicked date
+    const date = info.dateStr;
 
+    // Find the TrainingPlan for the clicked date
+    const trainingPlan = this.trainingPlans.find((plan) => {
+      const startDate = new Date(plan.startDate);
+      const endDate = new Date(plan.endDate);
+      const currentDate = new Date(date);
+
+      return startDate <= currentDate && endDate >= currentDate;
+    });
+
+    // If a TrainingPlan is found, get the exercises for the clicked day
+    const day = new Date(date).getDay();
+    const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+    const exercises = trainingPlan ? trainingPlan.exercises[dayNames[day]] : [];
+
+    // Create and present the ExercisesModalComponent
+    const modal = await this.modalController.create({
+      component: ExerciseComponent,
+      componentProps: {
+        date: date,
+        exercises: exercises,
+      },
+    });
+
+    await modal.present();
   }
+
 
   calendarSelected(info){
     console.log(info)

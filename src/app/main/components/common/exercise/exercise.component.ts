@@ -1,23 +1,20 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Exercise} from "../../../../models/training-plan";
+import {ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent {
 
-  @Input() exercise: Exercise = {name: "", reps: 0, sets: 0};
+  @Input() date: string = '';
+  @Input() exercises: Exercise[] = [];
 
-  isWeightVisible = false;
+  constructor(private modalController: ModalController) {}
 
-  toggleWeightVisibility() {
-    this.isWeightVisible = !this.isWeightVisible;
+  dismissModal() {
+    this.modalController.dismiss();
   }
-
-  constructor() { }
-
-  ngOnInit() {}
-
 }

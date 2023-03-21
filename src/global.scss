@@ -107,7 +107,7 @@ a {
   background-color: var(--ion-color-danger-shade);
 }
 
-.is-not-loading .loading-bar ion-progress-bar {
+.is-not-loading ion-progress-bar.loading-bar {
   display: none;
 }
 

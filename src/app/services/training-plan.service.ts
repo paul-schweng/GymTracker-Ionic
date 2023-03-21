@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {CommunicationRequestService} from "./lib/communication-request.service";
 import {HttpParams} from "@angular/common/http";
-import {TrainingPlan} from "../models/training-plan";
+import {ActualExercise, Exercise, TrainingPlan} from "../models/training-plan";
+import {firstValueFrom, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,41 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
     });
   }
 
+
+  generateActualExercises(date: string): Promise<ActualExercise[]> {
+    return new Promise((resolve) => {
+      // Replace the following with the actual API call or data loading logic
+      setTimeout(() => {
+        const mockData: ActualExercise[] = [
+          {
+            name: 'Bench Press',
+            sets: 4,
+            reps: 8,
+            weight: 80,
+            date: date,
+          },
+          {
+            name: 'Squats',
+            sets: 5,
+            reps: 5,
+            weight: 100,
+            date: date,
+          },
+          {
+            name: 'Deadlift',
+            sets: 5,
+            reps: 5,
+            weight: 120,
+            date: date,
+          },
+        ];
+
+        resolve(mockData);
+      }, 1000);
+    });
+  }
+
+
   public addTrainingPlan(trainingPlan: TrainingPlan) {
     return super.sendPostRequest(this.backendUrlPath, trainingPlan)
   }
@@ -91,5 +127,19 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
   public getTrainingPlans() {
     return this.generateMockTrainingPlan()
   }
+
+  public getActualExercises(date: string): Promise<ActualExercise[]> {
+    if(!date)
+      return firstValueFrom<ActualExercise[]>(of([]));
+
+    // return super.sendGetRequest<ActualExercise[]>(this.backendUrlPath + `/${date}/actual-exercises`).catch(() => {return []})
+    return this.generateActualExercises(date)
+  }
+
+  public addActualExercise(exercise: ActualExercise) {
+    console.log('heereee')
+    return super.sendPostRequest(this.backendUrlPath + `/${exercise.date}/actual-exercises`, exercise)
+  }
+
 
 }

@@ -22,6 +22,7 @@ import {AddTimeSpanComponent} from "./components/calendar/add-time-span/add-time
 import {AddTrainingPlanComponent} from "./components/calendar/add-training-plan/add-training-plan.component";
 import {ExerciseComponent} from "./components/common/exercise/exercise.component";
 import {ClickStopPropagationDirective} from "./directives/click-stop-propagation.directive";
+import {ExerciseInputModalComponent} from "./components/common/exercise-input-modal/exercise-input-modal.component";
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import {ClickStopPropagationDirective} from "./directives/click-stop-propagation
     AddTrainingPlanComponent,
     ExerciseComponent,
     ClickStopPropagationDirective,
+    ExerciseInputModalComponent,
   ]
 })
 export class MainModule {}

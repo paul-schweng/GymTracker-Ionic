@@ -107,7 +107,7 @@ a {
   background-color: var(--ion-color-danger-shade);
 }
 
-.is-not-loading ion-progress-bar {
+.is-not-loading .loading-bar ion-progress-bar {
   display: none;
 }
 
@@ -146,6 +146,6 @@ ion-accordion::part(content) {
   background: rgba(10,10,10,0.5);
 }
 
-ion-progress-bar {
+.loading-bar ion-progress-bar {
   z-index: 99999;
 }

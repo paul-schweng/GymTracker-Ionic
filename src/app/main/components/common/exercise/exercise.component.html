@@ -1,20 +1,55 @@
+
+
 <!-- exercises-modal.component.html -->
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Exercises for {{ date }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Close</ion-button>
-    </ion-buttons>
+    <ion-title>{{formatDate()}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ng-container *ngIf="exercises.length > 0; else restDayTemplate">
-    <ion-list>
-      <ion-item *ngFor="let exercise of exercises">
-        <ion-label>{{ exercise.name }} ({{ exercise.sets }} x {{ exercise.reps }})</ion-label>
-      </ion-item>
-    </ion-list>
+
+    <div>{{completedExercises}}/{{totalExercises}}</div>
+    <ion-progress-bar color="success" [value]="completedExercises / totalExercises"></ion-progress-bar>
+
+    <ion-card *ngFor="let exercise of actualExercises" class="exercise-card" (click)="editExercise(exercise)" tappable>
+      <ion-card-header color="primary">
+        <ion-card-title>
+          {{ exercise.name }}
+          <ion-icon *ngIf="isToday" name="create-outline" class="edit-icon"></ion-icon>
+        </ion-card-title>
+        <ion-icon *ngIf="exerciseReachedGoal(exercise)" name="checkmark-circle" size="large" class="goal-icon"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid class="exercise-details">
+          <ion-row class="headers">
+            <ion-col></ion-col>
+            <ion-col>Wdh</ion-col>
+            <ion-col>Sätze</ion-col>
+            <ng-container *ngIf="exercise.weight">
+              <ion-col>Gewicht</ion-col>
+            </ng-container>
+          </ion-row>
+          <ion-row class="goal">
+            <ion-col>Ziel</ion-col>
+            <ion-col>{{ exercise.sets }}</ion-col>
+            <ion-col>{{ exercise.reps }}</ion-col>
+            <ng-container *ngIf="exercise.weight">
+              <ion-col>{{ exercise.weight }} kg</ion-col>
+            </ng-container>
+          </ion-row>
+          <ion-row *ngIf="exercise.actualSets || exercise.actualReps || exercise.actualWeight" class="actual">
+            <ion-col>Erreicht</ion-col>
+            <ion-col>{{ exercise.actualSets || '-' }}</ion-col>
+            <ion-col>{{ exercise.actualReps || '-' }}</ion-col>
+            <ng-container *ngIf="exercise.weight">
+              <ion-col>{{ exercise.actualWeight ? exercise.actualWeight + ' kg' : '-' }}</ion-col>
+            </ng-container>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
   </ng-container>
 
   <ng-template #restDayTemplate>
@@ -24,3 +59,4 @@
     </div>
   </ng-template>
 </ion-content>
+

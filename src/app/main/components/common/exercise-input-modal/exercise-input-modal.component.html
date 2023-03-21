@@ -1,0 +1,20 @@
+<!-- exercise-edit-modal.component.html -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ exercise.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2><b>Was hast du tatsächlich geschafft?</b></h2>
+  <input-field label="Erreichte Wiederholungen" [(model)]="exercise.actualSets"></input-field>
+  <input-field label="Erreichte Sätze" [(model)]="exercise.actualReps"></input-field>
+  <input-field label="Erreichtes Gewicht" endSlot="kg" [(model)]="exercise.actualWeight"></input-field>
+
+  <ion-button expand="full" color="success" (click)="submitExerciseData()">Einreichen</ion-button>
+</ion-content>

@@ -25,6 +25,12 @@ export interface Exercise {
   weight?: number
 }
 
+export interface ActualExercise extends Partial<Exercise> {
+  actualSets?: number
+  actualReps?: number
+  actualWeight?: number
+  date: string
+}
 
 export function validateExercises(exercises: ExercisesWeek): boolean {
   let exerciseCount = 0;

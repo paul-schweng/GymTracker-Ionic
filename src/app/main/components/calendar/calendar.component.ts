@@ -13,6 +13,7 @@ import {TrainingPlanService} from "../../../services/training-plan.service";
 import {TrainingPlan} from "../../../models/training-plan";
 import {ExercisesComponent} from "../exercises/exercises.component";
 import {ExerciseComponent} from "../common/exercise/exercise.component";
+import {ExerciseInputModalComponent} from "../common/exercise-input-modal/exercise-input-modal.component";
 
 @Component({
   selector: 'app-calendar',
@@ -31,9 +32,6 @@ export class CalendarComponent implements OnInit {
     fixedWeekCount: false,
     height: '500px',
     dateClick: info => this.calendarEventClicked(info),
-    selectable: true,
-    select: this.calendarSelected,
-    selectMirror: true
   };
 
   @ViewChild(FullCalendarComponent) calendar!: FullCalendarComponent;
@@ -43,34 +41,51 @@ export class CalendarComponent implements OnInit {
   }
 
   async calendarEventClicked(info) {
-    // Get the clicked date
+    console.log(info)
+
     const date = info.dateStr;
 
-    // Find the TrainingPlan for the clicked date
-    const trainingPlan = this.trainingPlans.find((plan) => {
-      const startDate = new Date(plan.startDate);
-      const endDate = new Date(plan.endDate);
-      const currentDate = new Date(date);
-
-      return startDate <= currentDate && endDate >= currentDate;
-    });
-
-    // If a TrainingPlan is found, get the exercises for the clicked day
     const day = new Date(date).getDay();
-    const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-    const exercises = trainingPlan ? trainingPlan.exercises[dayNames[day]] : [];
+    const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const dayName = dayNames[day];
+
+
+    // Show the ExercisesModalComponent as before
+    const trainingPlan = this.getTrainingPlanForDate(new Date(date));
+    const exercises = trainingPlan?.exercises[dayName] ?? [];
 
     // Create and present the ExercisesModalComponent
     const modal = await this.modalController.create({
-      component: ExerciseComponent,
+      component: BaseModalComponent,
       componentProps: {
-        date: date,
-        exercises: exercises,
+        rootPage: ExerciseComponent,
+        props: {
+          date: date,
+          exercises: exercises,
+        }
       },
+      initialBreakpoint: 0.5,
+      breakpoints: [0.5, 0.9],
     });
 
     await modal.present();
+
+
   }
+
+
+
+
+  getTrainingPlanForDate(date: Date): TrainingPlan | undefined {
+    return this.trainingPlans.find((plan) => {
+      const startDate = new Date(plan.startDate);
+      const endDate = new Date(plan.endDate);
+
+      return date >= startDate && date < endDate;
+    });
+  }
+
+
 
 
   calendarSelected(info){

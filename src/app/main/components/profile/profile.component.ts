@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
+import {IAmService} from "../../../services/i-am.service";
 
 @Component({
   selector: 'app-profile',
@@ -8,7 +9,8 @@ import {AuthenticationService} from "../../../services/authentication.service";
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private readonly authService: AuthenticationService) { }
+  constructor(private readonly authService: AuthenticationService,
+              public readonly iAmService: IAmService) { }
 
   ngOnInit(): void {
   }

@@ -1,19 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import * as fnsDate from 'date-fns';
 import {CalendarOptions} from "@fullcalendar/core";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for selectable
 import {FullCalendarComponent} from "@fullcalendar/angular";
-import {calendar} from "ionicons/icons";
 import deLocale from '@fullcalendar/core/locales/de';
 import {IonRouterOutlet, ModalController} from "@ionic/angular";
 import {BaseModalComponent} from "../common/base-modal/base-modal.component";
 import {AddTimeSpanComponent} from "./add-time-span/add-time-span.component";
 import {TrainingPlanService} from "../../../services/training-plan.service";
 import {TrainingPlan} from "../../../models/training-plan";
-import {ExercisesComponent} from "../exercises/exercises.component";
 import {ExerciseComponent} from "../common/exercise/exercise.component";
-import {ExerciseInputModalComponent} from "../common/exercise-input-modal/exercise-input-modal.component";
 
 @Component({
   selector: 'app-calendar',
@@ -100,10 +96,10 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.trainingPlanService.getTrainingPlans().then(plans => {
       this.trainingPlans = this.sortTrainingPlansByDate(plans);
-      this.trainingPlans.forEach((plan, i) => {
+      this.trainingPlans.forEach(plan => {
 
         this.calendar.getApi().addEvent({
-          title: 'Trainingsplan ' + (i+1),
+          title: plan.name,
           start: plan.startDate,
           end: plan.endDate,
           allDay: true,
@@ -118,6 +114,9 @@ export class CalendarComponent implements OnInit {
       component: BaseModalComponent,
       componentProps: {
         rootPage: AddTimeSpanComponent,
+        props: {
+          trainingPlans: this.trainingPlans,
+        }
       },
       mode: 'md',
       presentingElement: this.routerOutlet.nativeEl,

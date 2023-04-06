@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {CommunicationRequestService} from "./lib/communication-request.service";
 import {HttpParams} from "@angular/common/http";
-import {ActualExercise, Exercise, TrainingPlan} from "../models/training-plan";
+import {ActualExercise, TrainingPlan} from "../models/training-plan";
 import {firstValueFrom, of} from "rxjs";
 
 @Injectable({
@@ -19,6 +19,7 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
     return new Promise((resolve) => {
       const mockTrainingPlans: TrainingPlan[] = [
         {
+          name: "Testplan 1",
           exercises: {
           monday: [
             { name: "Squats", sets: 4, reps: 10, weight: 100 },
@@ -48,6 +49,7 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
         endDate: "2023-06-12",
         },
         {
+          name: "Testplan 2",
           exercises: {
             monday: [
               { name: "Tricep Dips", sets: 3, reps: 12 },

@@ -13,27 +13,42 @@
 </ion-header>
 <ion-content class="ion-padding">
 
+
   <ion-accordion-group>
 
-    <ion-accordion *ngFor="let day of weekDays; let i = index" [value]="day">
+    <ion-accordion *ngFor="let day of weekDays; let i = index" [value]="day" toggleIconSlot="start">
       <ion-item slot="header">
         <ion-label>{{day}}</ion-label>
-        <ion-icon *ngIf="!exercises[i] || exercises[i].length < 1" name="time" slot="start" color="warning"></ion-icon>
+        <ion-icon *ngIf="!exercises[i] || exercises[i].length < 1" name="time" slot="end" color="warning"></ion-icon>
         <ion-buttons>
           <ion-button (click)="addExercise(i)" click-stop-propagation>
             <ion-icon color="success" size="large" name="add"></ion-icon>
           </ion-button>
         </ion-buttons>
-
       </ion-item>
 
       <div class="ion-padding" slot="content">
         <ion-accordion-group class="exercise">
-          <ion-accordion *ngFor="let exercise of exercises[i]; let j = index" class="ion-margin-bottom">
-            <ion-item slot="header" lines="none">
-              <ion-input [(ngModel)]="exercise.name" placeholder="Name der Übung" click-stop-propagation></ion-input>
-              <ion-icon name="trash" slot="start" color="danger" (click)="removeExercise(i, j)"></ion-icon>
-            </ion-item>
+          <ion-accordion *ngFor="let exercise of exercises[i]; let j = index" class="ion-margin-bottom" toggleIconSlot="start">
+
+            <div slot="header">
+              <ion-item lines="none" [class.autocomplete-search]="searchFocus[i][j]">
+                <ion-icon class="ion-accordion-toggle-icon" slot="start" name="chevron-down"></ion-icon>
+                <ion-input [(ngModel)]="exercise.name" (ngModelChange)="searchExercises($event, i, j); onFocus(i, j)" placeholder="Name der Übung" id="click-trigger" (ionFocus)="onFocus(i,j)" (ionBlur)="onBlur(i,j)" click-stop-propagation></ion-input>
+                <ion-icon name="trash" slot="end" color="danger" (click)="removeExercise(i, j)"></ion-icon>
+              </ion-item>
+
+              <div *ngIf="searchFocus[i][j]" class="autocomplete-list">
+                <ion-list *ngIf="searchResults.length > 0">
+                  <ion-item *ngFor="let exercise of searchResults" (click)="setExercise(i, j, exercise)" click-stop-propagation>
+                    <ion-label>{{exercise.name}}</ion-label>
+                    <ion-note slot="end">Letzter Stand</ion-note>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </div>
+
+
 
             <div slot="content" class="ion-padding-start ion-padding-end">
               <input-field [(model)]="exercise.reps" label="Wiederholungen"></input-field>

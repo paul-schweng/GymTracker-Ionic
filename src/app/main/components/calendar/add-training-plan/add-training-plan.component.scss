@@ -28,3 +28,34 @@ ion-item-group {
 .exercise ion-accordion:last-child {
   margin-bottom: unset;
 }
+
+.autocomplete-list {
+  position: relative;
+  background: #0a324e;
+  z-index: 400000;
+  width: 100%;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  max-height: 200px;
+
+  ion-list {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+}
+
+.autocomplete-search {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+ion-accordion.accordion-expanding, ion-accordion.accordion-expanded {
+  z-index: 3;
+}
+
+ion-item::part(native) .input-wrapper {
+  display: block;
+}

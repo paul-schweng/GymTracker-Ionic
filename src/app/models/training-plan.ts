@@ -1,4 +1,6 @@
 export interface TrainingPlan {
+  id?: string
+  name: string
   exercises: ExercisesWeek
   /**
    * Duration in <b>weeks</b>
@@ -19,6 +21,7 @@ export interface ExercisesWeek {
 }
 
 export interface Exercise {
+  id?: string
   name: string
   sets: number
   reps: number

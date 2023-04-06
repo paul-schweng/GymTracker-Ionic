@@ -23,7 +23,8 @@
 
 <ion-content class="ion-padding">
 
-  <input-field [label]="'Dauer'" endSlot="Wochen" [FormControl]="formControl" [(model)]="trainingPlan.duration"></input-field>
+  <input-field [label]="'Name'" type="text" [FormControl]="formControlName" [(model)]="trainingPlan.name"></input-field>
+  <input-field [label]="'Dauer'" endSlot="Wochen" [FormControl]="formControlDuration" [(model)]="trainingPlan.duration"></input-field>
 
   <ion-card color="primary" class="ion-padding m-0">
     <full-calendar [options]="calendarOptions"></full-calendar>

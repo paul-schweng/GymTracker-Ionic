@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -24,6 +24,7 @@ import {toastEnter, toastLeave} from "./functions/toast-animations";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxEchartsModule} from "ngx-echarts";
 import {FullCalendarModule} from "@fullcalendar/angular";
+import {AutoCompleteModule} from "ionic4-auto-complete";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {FullCalendarModule} from "@fullcalendar/angular";
     FullCalendarModule,
     CommonModule,
     NgbModule,
+    AutoCompleteModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),

@@ -23,6 +23,7 @@ import {AddTrainingPlanComponent} from "./components/calendar/add-training-plan/
 import {ExerciseComponent} from "./components/common/exercise/exercise.component";
 import {ClickStopPropagationDirective} from "./directives/click-stop-propagation.directive";
 import {ExerciseInputModalComponent} from "./components/common/exercise-input-modal/exercise-input-modal.component";
+import {AutoCompleteModule} from "ionic4-auto-complete";
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {ExerciseInputModalComponent} from "./components/common/exercise-input-mo
         MainRoutingModule,
         NgxEchartsModule,
         ReactiveFormsModule,
-        FullCalendarModule
+        FullCalendarModule,
+        AutoCompleteModule
     ],
   declarations: [
     MainPage,

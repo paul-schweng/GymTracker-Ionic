@@ -5,11 +5,11 @@ import {
   TrainingPlan,
   validateExercises,
 } from "../../../../models/training-plan";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LoadingControllerService} from "../../../../services/loading-controller.service";
 import {TrainingPlanService} from "../../../../services/training-plan.service";
 import {NotificationService} from "../../../../services/notification.service";
 import {ModalController} from "@ionic/angular";
+import {debounceTime, Subject, tap} from "rxjs";
 
 @Component({
   selector: 'app-add-training-plan',
@@ -24,6 +24,9 @@ export class AddTrainingPlanComponent implements OnInit {
 
   weekDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
 
+  searchResults: any[] = [];
+  searchFocus: any = [[], [], [], [], [], [], []];
+  private searchSubject = new Subject<{val: string, i: number, j: number}>();
 
 
   constructor(private readonly loadingControllerService: LoadingControllerService,
@@ -31,8 +34,19 @@ export class AddTrainingPlanComponent implements OnInit {
               private readonly notificationService: NotificationService,
               private modalCtrl: ModalController) { }
 
-  ngOnInit() {
 
+  ngOnInit() {
+    this.searchSubject.pipe(
+        debounceTime(300),
+        tap((value) => value.val = value.val.trim()),
+        tap((value) => {
+          this.trainingPlanService.getActualExercises(value.val).then((res) => {
+            this.searchResults = res;
+            this.onFocus(value.i, value.j)
+          });
+        })
+      )
+      .subscribe();
   }
 
 
@@ -79,6 +93,31 @@ export class AddTrainingPlanComponent implements OnInit {
     this.trainingPlanService.addTrainingPlan(this.trainingPlan)
       .then(() => this.modalCtrl.dismiss())
       .finally(() => this.loadingControllerService.isLoading = false)
+  }
+
+  searchExercises(input: any, i, j) {
+    this.searchSubject.next({val: input, i, j});
+  }
+
+
+  setExercise(i: number, j: number, exercise: Exercise) {
+    console.log(i, j, exercise, this.exercises)
+    this.exercises[i][j] = exercise;
+    this.searchResults = [];
+  }
+
+
+  onFocus(i: number, j: number) {
+    console.log(this.searchResults)
+    this.searchFocus[i][j] = this.searchResults.length > 0;
+  }
+
+  onBlur(i: number, j: number) {
+    setTimeout(() => {
+      this.searchFocus[i][j] = false;
+      this.searchResults = [];
+    }, 100);
+
   }
 
 }

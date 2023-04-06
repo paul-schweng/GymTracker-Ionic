@@ -39,6 +39,7 @@
     "date-fns": "^2.29.3",
     "echarts": "^5.4.1",
     "ion2-calendar": "^3.5.0",
+    "ionic4-auto-complete": "^2.9.9",
     "ionicons": "^6.0.3",
     "moment": "^2.29.4",
     "ngx-echarts": "^14.0.0",

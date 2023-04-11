@@ -51,3 +51,15 @@ export function validateExercises(exercises: ExercisesWeek): boolean {
 
   return exerciseCount > 0;
 }
+
+export function convertExercisesWeekToArray(exercisesWeek: ExercisesWeek): Exercise[][] {
+  return [
+    exercisesWeek.monday,
+    exercisesWeek.tuesday,
+    exercisesWeek.wednesday,
+    exercisesWeek.thursday,
+    exercisesWeek.friday,
+    exercisesWeek.saturday,
+    exercisesWeek.sunday,
+  ];
+}

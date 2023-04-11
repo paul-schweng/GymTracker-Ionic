@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {AddTrainingPlanComponent} from "../add-training-plan/add-training-plan.component";
 import {ModalController} from "@ionic/angular";
 import {TrainingPlan} from "../../../../models/training-plan";
@@ -25,6 +25,7 @@ export class AddTimeSpanComponent implements OnInit {
   addTrainingPlan = AddTrainingPlanComponent;
 
   trainingPlan: TrainingPlan = {
+    id: '-1',
     duration: 1,
     name: 'Neuer Trainingsplan',
     startDate: '',
@@ -54,11 +55,10 @@ export class AddTimeSpanComponent implements OnInit {
 
   public ionViewWillEnter(): void {
     this.calendar?.getApi().updateSize();
-
-
   }
 
-  constructor(private modalCtrl: ModalController) {
+  constructor(private modalCtrl: ModalController,
+              private changeDetector: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -75,6 +75,7 @@ export class AddTimeSpanComponent implements OnInit {
           start: plan.startDate,
           end: plan.endDate,
           allDay: true,
+          id: plan.id,
         });
       })
     }, 100)
@@ -85,7 +86,7 @@ export class AddTimeSpanComponent implements OnInit {
   }
 
   calendarSelected(info?) {
-    this.calendar?.getApi().getEventById('-1')?.remove();
+    this.calendar?.getApi().getEventById(this.trainingPlan.id!)?.remove();
 
     let start = info?.dateStr ?? this.trainingPlan.startDate;
     let end = fnsDate.addDays(new Date(start), this.trainingPlan.duration*7);
@@ -101,7 +102,7 @@ export class AddTimeSpanComponent implements OnInit {
       start: start,
       end: this.trainingPlan.endDate,
       allDay: true,
-      id: '-1',
+      id: this.trainingPlan.id,
       backgroundColor: '#dd6922',
       borderColor: '#b04d0f'
     };
@@ -113,11 +114,12 @@ export class AddTimeSpanComponent implements OnInit {
     }
 
     this.calendar?.getApi().addEvent(newEvent)
+    this.changeDetector.detectChanges();
   }
 
 
   canNavigate() {
-    return this.trainingPlan.duration > 0 &&
+    return this.trainingPlan.duration > 0 && this.trainingPlan.name.trim().length > 0 &&
       fnsDate.isValid(new Date(this.trainingPlan.startDate)) && fnsDate.isValid(new Date(this.trainingPlan.endDate)) &&
       !this.eventOverlaps();
   }
@@ -129,10 +131,10 @@ export class AddTimeSpanComponent implements OnInit {
     const flag = !!newEvent
 
     if(!newEvent)
-      newEvent = events?.find(event => event.id === '-1');
+      newEvent = events?.find(event => event.id === this.trainingPlan.id);
 
     return events?.some(event => {
-      if (event.id === '-1') {
+      if (event.id === this.trainingPlan.id) {
         return false;
       }
       const eventRange = {
@@ -145,7 +147,8 @@ export class AddTimeSpanComponent implements OnInit {
       };
 
       if (flag)
-      console.log(newEventRange, eventRange)
+        console.log(newEventRange, eventRange)
+
       return new Date(eventRange.start!) < new Date(newEventRange.end) &&
         new Date(eventRange.end!) > new Date(newEventRange.start);
 

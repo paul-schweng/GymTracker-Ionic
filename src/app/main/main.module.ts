@@ -24,6 +24,7 @@ import {ExerciseComponent} from "./components/common/exercise/exercise.component
 import {ClickStopPropagationDirective} from "./directives/click-stop-propagation.directive";
 import {ExerciseInputModalComponent} from "./components/common/exercise-input-modal/exercise-input-modal.component";
 import {AutoCompleteModule} from "ionic4-auto-complete";
+import {TrainingPlanInfoComponent} from "./components/calendar/training-plan-info/training-plan-info.component";
 
 @NgModule({
     imports: [
@@ -52,6 +53,7 @@ import {AutoCompleteModule} from "ionic4-auto-complete";
     ExerciseComponent,
     ClickStopPropagationDirective,
     ExerciseInputModalComponent,
+    TrainingPlanInfoComponent
   ]
 })
 export class MainModule {}

@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {CommunicationRequestService} from "./lib/communication-request.service";
 import {HttpParams} from "@angular/common/http";
 import {ActualExercise, TrainingPlan} from "../models/training-plan";
-import {firstValueFrom, of} from "rxjs";
+import {firstValueFrom, of, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,13 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
     return new HttpParams();
   }
 
+  update$ = new Subject<string>();
+
   generateMockTrainingPlan(): Promise<TrainingPlan[]> {
     return new Promise((resolve) => {
       const mockTrainingPlans: TrainingPlan[] = [
         {
+          id: '1',
           name: "Testplan 1",
           exercises: {
           monday: [
@@ -44,11 +47,12 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
             { name: "Lunges", sets: 4, reps: 10, weight: 40 },
           ],
         },
-        duration: 12,
-        startDate: "2023-03-20",
-        endDate: "2023-06-12",
+          duration: 12,
+          startDate: "2023-03-20",
+          endDate: "2023-06-12",
         },
         {
+          id: '2',
           name: "Testplan 2",
           exercises: {
             monday: [
@@ -123,10 +127,21 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
 
 
   public addTrainingPlan(trainingPlan: TrainingPlan) {
-    return super.sendPostRequest(this.backendUrlPath, trainingPlan)
+    return super.sendPostRequest(this.backendUrlPath, trainingPlan).then(res => {
+      this.update$.next('yes');
+      return res;
+    })
+  }
+
+  public updateTrainingPlan(trainingPlan: TrainingPlan) {
+    return super.sendPutRequest(this.backendUrlPath, trainingPlan).then(res => {
+      this.update$.next('yes');
+      return res;
+    })
   }
 
   public getTrainingPlans() {
+    // return super.sendGetRequest<TrainingPlan[]>(this.backendUrlPath).catch(() => {return []})
     return this.generateMockTrainingPlan()
   }
 
@@ -139,7 +154,6 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
   }
 
   public addActualExercise(exercise: ActualExercise) {
-    console.log('heereee')
     return super.sendPostRequest(this.backendUrlPath + `/${exercise.date}/actual-exercises`, exercise)
   }
 

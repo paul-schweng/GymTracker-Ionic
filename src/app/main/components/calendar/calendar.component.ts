@@ -10,6 +10,7 @@ import {AddTimeSpanComponent} from "./add-time-span/add-time-span.component";
 import {TrainingPlanService} from "../../../services/training-plan.service";
 import {TrainingPlan} from "../../../models/training-plan";
 import {ExerciseComponent} from "../common/exercise/exercise.component";
+import {TrainingPlanInfoComponent} from "./training-plan-info/training-plan-info.component";
 
 @Component({
   selector: 'app-calendar',
@@ -27,7 +28,8 @@ export class CalendarComponent implements OnInit {
     locale: deLocale,
     fixedWeekCount: false,
     height: '500px',
-    dateClick: info => this.calendarEventClicked(info),
+    dateClick: info => this.calendarDayClicked(info),
+    eventClick: info => this.calendarEventClicked(info),
   };
 
   @ViewChild(FullCalendarComponent) calendar!: FullCalendarComponent;
@@ -36,7 +38,7 @@ export class CalendarComponent implements OnInit {
     this.calendar.getApi().updateSize();
   }
 
-  async calendarEventClicked(info) {
+  async calendarDayClicked(info) {
     console.log(info)
 
     const date = info.dateStr;
@@ -70,8 +72,6 @@ export class CalendarComponent implements OnInit {
   }
 
 
-
-
   getTrainingPlanForDate(date: Date): TrainingPlan | undefined {
     return this.trainingPlans.find((plan) => {
       const startDate = new Date(plan.startDate);
@@ -94,8 +94,17 @@ export class CalendarComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loadTrainingPlans();
+
+    this.trainingPlanService.update$.subscribe(() => {
+      this.loadTrainingPlans();
+    });
+  }
+
+
+  loadTrainingPlans() {
     this.trainingPlanService.getTrainingPlans().then(plans => {
-      this.trainingPlans = this.sortTrainingPlansByDate(plans);
+      this.trainingPlans = plans;
       this.trainingPlans.forEach(plan => {
 
         this.calendar.getApi().addEvent({
@@ -103,11 +112,13 @@ export class CalendarComponent implements OnInit {
           start: plan.startDate,
           end: plan.endDate,
           allDay: true,
+          id: plan.id,
         });
 
       });
     })
   }
+
 
   async addTrainingPlan() {
     const modal = await this.modalController.create({
@@ -132,6 +143,31 @@ export class CalendarComponent implements OnInit {
 
       return dateA.getTime() - dateB.getTime();
     });
+  }
+
+
+  async calendarEventClicked(info) {
+    const clickedTrainingPlan = this.trainingPlans.find(
+      (plan) => plan.id === info.event.id
+    );
+
+    if (!clickedTrainingPlan)
+      return;
+
+    const modal = await this.modalController.create({
+      component: BaseModalComponent,
+      componentProps: {
+        rootPage: TrainingPlanInfoComponent,
+        props: {
+          trainingPlans: structuredClone(this.trainingPlans),
+          selectedTrainingPlan: clickedTrainingPlan.id
+        }
+      },
+      initialBreakpoint: 0.5,
+      breakpoints: [0.5, 0.8],
+    });
+
+    await modal.present();
   }
 
 

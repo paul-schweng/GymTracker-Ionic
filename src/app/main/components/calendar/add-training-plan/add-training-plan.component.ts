@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  convertExercisesWeekToArray,
   Exercise,
   ExercisesWeek,
   TrainingPlan,
@@ -36,6 +37,7 @@ export class AddTrainingPlanComponent implements OnInit {
 
 
   ngOnInit() {
+    this.exercises = convertExercisesWeekToArray(this.trainingPlan.exercises);
     this.searchSubject.pipe(
         debounceTime(300),
         tap((value) => value.val = value.val.trim()),
@@ -90,9 +92,14 @@ export class AddTrainingPlanComponent implements OnInit {
     this.trainingPlan.exercises = exercisesWeek;
     console.log(this.trainingPlan); // or save to a database or send to a server
 
-    this.trainingPlanService.addTrainingPlan(this.trainingPlan)
-      .then(() => this.modalCtrl.dismiss())
-      .finally(() => this.loadingControllerService.isLoading = false)
+    if(this.trainingPlan.id == '-1')
+      this.trainingPlanService.addTrainingPlan(this.trainingPlan)
+        .then(() => this.modalCtrl.dismiss())
+        .finally(() => this.loadingControllerService.isLoading = false)
+    else
+      this.trainingPlanService.updateTrainingPlan(this.trainingPlan)
+        .then(() => this.modalCtrl.dismiss())
+        .finally(() => this.loadingControllerService.isLoading = false)
   }
 
   searchExercises(input: any, i, j) {

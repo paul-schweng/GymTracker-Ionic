@@ -1,0 +1,17 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{trainingPlan.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editTrainingPlan()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h4>{{ formatDate(trainingPlan.startDate) }} bis</h4>
+  <h4 class="ion-padding-bottom">{{ formatDate(trainingPlan.endDate) }}</h4>
+  <h4>Dauer: {{ trainingPlan.duration }} Wochen</h4>
+</ion-content>

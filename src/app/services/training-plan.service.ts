@@ -15,7 +15,8 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
     return new HttpParams();
   }
 
-  update$ = new Subject<string>();
+  trainingPlans: TrainingPlan[] = [];
+  trainingPlans$ = new Subject<TrainingPlan[]>();
 
   generateMockTrainingPlan(): Promise<TrainingPlan[]> {
     return new Promise((resolve) => {
@@ -127,22 +128,26 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
 
 
   public addTrainingPlan(trainingPlan: TrainingPlan) {
-    return super.sendPostRequest(this.backendUrlPath, trainingPlan).then(res => {
-      this.update$.next('yes');
+    return super.sendPostRequest(this.backendUrlPath, trainingPlan).then(async res => {
+      await this.getTrainingPlans();
       return res;
     })
   }
 
   public updateTrainingPlan(trainingPlan: TrainingPlan) {
-    return super.sendPutRequest(this.backendUrlPath, trainingPlan).then(res => {
-      this.update$.next('yes');
+    return super.sendPutRequest(this.backendUrlPath, trainingPlan).then(async res => {
+      await this.getTrainingPlans();
       return res;
     })
   }
 
   public getTrainingPlans() {
     // return super.sendGetRequest<TrainingPlan[]>(this.backendUrlPath).catch(() => {return []})
-    return this.generateMockTrainingPlan()
+    return this.generateMockTrainingPlan().then(plans => {
+      this.trainingPlans = plans;
+      this.trainingPlans$.next(plans);
+      return plans;
+    })
   }
 
   public getActualExercises(date: string): Promise<ActualExercise[]> {

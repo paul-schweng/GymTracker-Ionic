@@ -26,6 +26,7 @@ export interface Exercise {
   sets: number
   reps: number
   weight?: number
+  date?: string
 }
 
 export interface ActualExercise extends Partial<Exercise> {

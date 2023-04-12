@@ -94,29 +94,33 @@ export class CalendarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loadTrainingPlans();
-
-    this.trainingPlanService.update$.subscribe(() => {
+    this.trainingPlanService.trainingPlans$.subscribe(() => {
       this.loadTrainingPlans();
     });
+
+    if(this.trainingPlanService.trainingPlans.length == 0)
+      this.trainingPlanService.getTrainingPlans()
+    else
+      this.loadTrainingPlans();
   }
 
 
-  loadTrainingPlans() {
-    this.trainingPlanService.getTrainingPlans().then(plans => {
-      this.trainingPlans = plans;
-      this.trainingPlans.forEach(plan => {
+  async loadTrainingPlans() {
+    await new Promise(resolve => setTimeout(resolve, 50));
 
-        this.calendar.getApi().addEvent({
-          title: plan.name,
-          start: plan.startDate,
-          end: plan.endDate,
-          allDay: true,
-          id: plan.id,
-        });
+    this.trainingPlans = this.trainingPlanService.trainingPlans;
+    this.trainingPlans.forEach(plan => {
 
+      this.calendar.getApi().addEvent({
+        title: plan.name,
+        start: plan.startDate,
+        end: plan.endDate,
+        allDay: true,
+        id: plan.id,
       });
-    })
+
+    });
+
   }
 
 

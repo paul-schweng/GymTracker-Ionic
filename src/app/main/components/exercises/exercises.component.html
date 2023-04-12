@@ -1,1 +1,30 @@
-<p>exercises works!</p>
+
+<div class="top-page-margin">
+
+  <ion-accordion-group class="ion-padding">
+    <ion-accordion *ngFor="let name of exerciseNames">
+      <ion-item slot="header">
+        <ion-label>{{ name }}</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-grid>
+          <ion-row class="table-header">
+            <ion-col>Datum</ion-col>
+            <ion-col>Sätze</ion-col>
+            <ion-col>Wdh</ion-col>
+            <ion-col *ngIf="exerciseHasWeight(name)">Gewicht</ion-col>
+          </ion-row>
+          <ion-row *ngFor="let exercise of exercises[name]" class="table-row">
+            <ion-col>{{ formatDate(exercise.date) }}</ion-col>
+            <ion-col>{{ exercise.sets }}</ion-col>
+            <ion-col>{{ exercise.reps }}</ion-col>
+            <ion-col *ngIf="exerciseHasWeight(name)">{{ exercise.weight ? exercise.weight + ' kg' : '-' }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+</div>
+
+

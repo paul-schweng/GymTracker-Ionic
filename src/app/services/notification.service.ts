@@ -55,7 +55,7 @@ export class NotificationService {
         this.error(this.httpErrorPath, "httpError.msg.error", 'globe');
       }
     }
-    else if (error.status === 406) {
+    else if (error.status === 420) {
       console.log(error, error.error);
       this.error(error.error.title, error.error.message, 'flash');
     }

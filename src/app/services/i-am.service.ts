@@ -12,7 +12,7 @@ export class IAmService extends CommunicationRequestService<any>{
     name: "", username: ""
   };
 
-  protected readonly backendUrlExt: string = 'iAm';
+  protected readonly backendUrlExt: string = 'auth';
 
 
   protected prepareRequestObjectParameter(reqParameter: any): HttpParams {
@@ -23,7 +23,7 @@ export class IAmService extends CommunicationRequestService<any>{
   }
 
   loadUser(headers?: any){
-    return super.sendGetRequest<iAmUser>(this.backendUrlExt, null, headers)
+    return super.sendGetRequest<iAmUser>(this.backendUrlExt + '/iAm', null, headers)
       .then(user => {
         this.iAmUser = user
         return user;

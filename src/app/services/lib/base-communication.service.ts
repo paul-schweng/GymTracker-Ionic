@@ -44,6 +44,8 @@ export abstract class BaseCommunicationService {
             resolve(response);
           }, error => {
             this.notification.handleHttpError(error);
+            if(error.status === 401)
+              this.router.navigate(['/auth/login']);
             reject(error);
           }
         );

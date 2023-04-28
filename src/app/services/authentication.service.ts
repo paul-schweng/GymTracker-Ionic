@@ -25,7 +25,9 @@ export class AuthenticationService{
 
 
   logout(){
-    return this.iAmService.sendPostRequest(this.backendUrlPath + '/logout', {});
+    return this.iAmService.sendPostRequest(this.backendUrlPath + '/logout', {}).then(() => {
+      this.iAmService.iAmUser = {username:"", name: ""};
+    });
   }
 
   register(user: RegisterUser){
@@ -38,7 +40,7 @@ export class AuthenticationService{
 
   isAuthenticated(): boolean {
     // TODO: change this to '!!'
-    return !this.iAmService.iAmUser.username;
+    return !!this.iAmService.iAmUser.username;
   }
 
 }

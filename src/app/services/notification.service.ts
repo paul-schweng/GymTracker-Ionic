@@ -15,9 +15,6 @@ export class NotificationService {
               private animationController: AnimationController) { }
 
   error(header: string, msg: string, icon = '') {
-
-
-
     this.toastController.create({
       message: msg,
       header: header,
@@ -38,23 +35,31 @@ export class NotificationService {
 
     if (!error) {
       console.info('[BaseCommunicationService] - An undefined error occurred while calling backend');
-      this.error(this.httpErrorPath, "Ein unbekannter Fehler ist aufgetreten", 'globe');
+
     }
     else if (error.status === 400) {
       console.info('[BaseCommunicationService] - Bad request was sent to backend');
       this.error(this.httpErrorPath, "Die Anfrage hat nicht geklappt", 'globe');
-    } else if (error.status === 401) {
+    }
+    else if (error.status === 401) {
       console.info('[BaseCommunicationService] - Unauthorized call to backend. Forwarding to unauthorized-page');
-    } else if (error.status === 403) {
+    }
+    else if (error.status === 403) {
       console.info('[BaseCommunicationService] - Accessing resource forbidden');
       // this.notification.warn("httpError.header.forbidden", "httpError.msg.forbidden");
-    } else if (error.status === 404) {
+    }
+    else if (error.status === 404) {
       console.info('[BaseCommunicationService] - Unknown backend call');
       if (error.hasOwnProperty("error") && error.error !== null){
         console.info('[BaseCommunicationService] - error msg: ', error.error);
         this.error(this.httpErrorPath, "httpError.msg.error", 'globe');
       }
-    } else {
+    }
+    else if (error.status === 406) {
+      console.log(error, error.error);
+      this.error(error.error.title, error.error.message, 'flash');
+    }
+    else {
       console.info( '[BaseCommunicationService] - An error occurred while calling backend:\n', error.message);
       this.error(this.httpErrorPath, `Es ist ein Fehler aufgetreten (Code: ${error?.status})`, 'globe');
     }

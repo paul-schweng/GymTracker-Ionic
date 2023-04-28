@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 import {IAmService} from "../../../services/i-am.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,8 @@ import {IAmService} from "../../../services/i-am.service";
 export class ProfileComponent implements OnInit {
 
   constructor(private readonly authService: AuthenticationService,
-              public readonly iAmService: IAmService) { }
+              public readonly iAmService: IAmService,
+              private readonly router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,6 +20,6 @@ export class ProfileComponent implements OnInit {
   logout() {
     console.log('here')
     this.authService.logout()
-      .then();
+      .then(() => this.router.navigate(['/auth/login']));
   }
 }

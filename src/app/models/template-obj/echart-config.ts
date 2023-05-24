@@ -1,5 +1,5 @@
 import {EChartsOption, graphic} from "echarts";
-import {BodyData, TimeSeriesData} from "../body-data";
+import {TimeSeriesData} from "../body-data";
 
 export const EChartsLineConfig = {
   title: {

@@ -47,6 +47,7 @@ export class DataService extends CommunicationRequestService<any>{
     newData.bicep.right = this.createMockData();
     newData.bicep.left = this.createMockData();
     newData.weight = this.createMockData();
+    console.log(newData)
     return lastValueFrom(of(newData));
 
     // return super.sendGetRequest(this.backendUrlPath);

@@ -3,6 +3,8 @@ import {Exercise, TrainingPlan} from "../../../models/training-plan";
 import {de} from "date-fns/locale";
 import * as fnsDate from 'date-fns';
 import {TrainingPlanService} from "../../../services/training-plan.service";
+import {ExerciseService} from "../../../services/exercise.service";
+import {LoadingControllerService} from "../../../services/loading-controller.service";
 
 @Component({
   selector: 'app-exercises',
@@ -14,7 +16,9 @@ export class ExercisesComponent implements OnInit {
   exerciseNames: string[] = [];
   exercises: { [key: string]: Exercise[] } = {};
 
-  constructor(private trainingPlanService: TrainingPlanService) {}
+  constructor(private trainingPlanService: TrainingPlanService,
+              private exerciseService: ExerciseService,
+              private loadingControllerService: LoadingControllerService) {}
 
   ngOnInit() {
     this.trainingPlanService.trainingPlans$.subscribe(() => this.fetchExercisesFromTrainingPlans());
@@ -39,7 +43,8 @@ export class ExercisesComponent implements OnInit {
   }
 
 
-  fetchExercisesFromTrainingPlans() {
+  async fetchExercisesFromTrainingPlans() {
+    /*
     const allExercises: Exercise[] = [];
     const trainingPlans: TrainingPlan[] = this.trainingPlanService.trainingPlans;
 
@@ -78,6 +83,12 @@ export class ExercisesComponent implements OnInit {
 
     this.exercises = groupedExercises;
     this.exerciseNames = Array.from(uniqueNames).sort();
+     */
+
+    this.loadingControllerService.isLoading = true;
+    this.exercises = await this.exerciseService.getExercises();
+    this.exerciseNames = Object.keys(this.exercises).sort();
+    this.loadingControllerService.isLoading = false;
   }
 
   isEqual(exercise1: Exercise, exercise2: Exercise): boolean {

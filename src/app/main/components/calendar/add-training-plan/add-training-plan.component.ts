@@ -11,6 +11,7 @@ import {TrainingPlanService} from "../../../../services/training-plan.service";
 import {NotificationService} from "../../../../services/notification.service";
 import {ModalController} from "@ionic/angular";
 import {debounceTime, Subject, tap} from "rxjs";
+import {ExerciseService} from "../../../../services/exercise.service";
 
 @Component({
   selector: 'app-add-training-plan',
@@ -32,6 +33,7 @@ export class AddTrainingPlanComponent implements OnInit {
 
   constructor(private readonly loadingControllerService: LoadingControllerService,
               private readonly trainingPlanService: TrainingPlanService,
+              private readonly exerciseService: ExerciseService,
               private readonly notificationService: NotificationService,
               private modalCtrl: ModalController) { }
 
@@ -42,7 +44,7 @@ export class AddTrainingPlanComponent implements OnInit {
         debounceTime(300),
         tap((value) => value.val = value.val.trim()),
         tap((value) => {
-          this.trainingPlanService.getActualExercises(value.val).then((res) => {
+          this.exerciseService.getExercisesByName(value.val).then((res) => {
             this.searchResults = res;
             this.onFocus(value.i, value.j)
           });

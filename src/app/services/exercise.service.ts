@@ -12,6 +12,9 @@ export class ExerciseService extends CommunicationRequestService<any> {
   private readonly backendUrlPath: string = 'exercises';
 
   protected prepareRequestObjectParameter(reqParameter: any): HttpParams {
+    if(reqParameter.q) {
+      return new HttpParams().set('q', reqParameter.q);
+    }
     return new HttpParams();
   }
 
@@ -64,8 +67,12 @@ export class ExerciseService extends CommunicationRequestService<any> {
   }
 
   getExercisesByName(name: string): Promise<Exercise[]> {
-    return firstValueFrom(of(this.mockData.filter((exercise) => exercise.name === name)));
-    // return super.sendGetRequest(this.backendUrlPath + '/' + name);
+    // return firstValueFrom(of(this.mockData.filter((exercise) => exercise.name === name)));
+    return super.sendGetRequest(this.backendUrlPath + '/autocomplete', {q: name});
+  }
+
+  getExercises(): Promise<{ [key: string]: Exercise[] }> {
+    return super.sendGetRequest(this.backendUrlPath);
   }
 
 }

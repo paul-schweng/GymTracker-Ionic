@@ -41,7 +41,7 @@ export class DataComponent implements OnInit, ViewDidEnter {
     leg: {right: undefined, left: undefined}
   };
 
-
+  loadedData = false;
 
   constructor(private readonly dataService: DataService,
               private readonly notificationService: NotificationService,
@@ -53,11 +53,15 @@ export class DataComponent implements OnInit, ViewDidEnter {
   }
 
 
-  async ionViewDidEnter() {
+  ionViewDidEnter() {
 
-    let data = await this.dataService.getBodyData();
-    this.chartOptions = bodyDataToEChartOptions(data);
-    this.loadingControllerService.isLoading = false;
+    this.dataService.getBodyData().then(async data => {
+      this.loadedData = true;
+      await new Promise(resolve => setTimeout(resolve, 100));
+      this.chartOptions = bodyDataToEChartOptions(data);
+    }).finally(() => {
+      this.loadingControllerService.isLoading = false;
+    });
   }
 
 
@@ -67,10 +71,13 @@ export class DataComponent implements OnInit, ViewDidEnter {
 
   modelConfirm() {
     try{
+      console.log(this.rawNewData)
       let data = rawBodyDataToBodyData(this.rawNewData);
-      this.dataService.postNewData(data).then(() =>
-        this.modal.dismiss(null, 'confirm')
-      )
+      console.log(data)
+      this.dataService.postNewData(data).then(() => {
+        this.modal.dismiss(null, 'confirm');
+        this.ionViewDidEnter();
+      })
     }catch (e){
       this.notificationService.error('HALT STOP!', 'Deine Angaben sind unvollständig oder falsch', 'flash-sharp')
     }

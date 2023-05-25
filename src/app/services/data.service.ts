@@ -33,6 +33,7 @@ export class DataService extends CommunicationRequestService<any>{
 
 
   getBodyData(): Promise<BodyData> {
+    /*
     let newData: BodyData = {
       bicep: {right: [], left: []},
       breast: [],
@@ -47,10 +48,11 @@ export class DataService extends CommunicationRequestService<any>{
     newData.bicep.right = this.createMockData();
     newData.bicep.left = this.createMockData();
     newData.weight = this.createMockData();
-    console.log(newData)
+    console.log(structuredClone(newData));
     return lastValueFrom(of(newData));
+     */
 
-    // return super.sendGetRequest(this.backendUrlPath);
+    return super.sendGetRequest(this.backendUrlPath);
   }
 
 

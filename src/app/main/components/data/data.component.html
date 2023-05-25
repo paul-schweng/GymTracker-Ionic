@@ -4,39 +4,45 @@
   </ion-fab-button>
 </ion-fab>
 
-<ion-card color="primary" class="ion-padding">
-  <div echarts [options]="chartOptions.weight || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.shoulders || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.bicep.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.bicep.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.forearm.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.forearm.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.breast || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.waist || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.hip || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.leg.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
-<ion-card class="ion-padding">
-  <div echarts [options]="chartOptions.leg.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
-</ion-card>
+<div *ngIf="loadedData; else noData">
+  <ion-card color="primary" class="ion-padding">
+    <div echarts [options]="chartOptions.weight || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.shoulders || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.bicep.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.bicep.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.forearm.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.forearm.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.breast || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.waist || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.hip || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.leg.right || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+  <ion-card class="ion-padding">
+    <div echarts [options]="chartOptions.leg.left || {}" class="chart" style="height: auto" [theme]="'dark'"></div>
+  </ion-card>
+</div>
+
+<ng-template #noData>
+  <h1 class="d-flex justify-content-center align-items-center flex-grow-1">Keine Daten vorhanden</h1>
+</ng-template>
 
 
 

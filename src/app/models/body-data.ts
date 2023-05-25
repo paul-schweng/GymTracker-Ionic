@@ -94,7 +94,7 @@ export function rawBodyDataToBodyData(data, bodyData?){
           throw new Error()
         }
 
-        bodyData[key] = [date.formatISO(new Date(), { representation: 'date' }), sourceValue];
+        bodyData[key] = [parseFloat(sourceValue)];
       }
     }
   });

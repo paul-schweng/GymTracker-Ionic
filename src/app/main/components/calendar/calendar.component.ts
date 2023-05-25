@@ -109,6 +109,8 @@ export class CalendarComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve, 50));
 
     this.trainingPlans = this.trainingPlanService.trainingPlans;
+    this.calendar.getApi().removeAllEvents();
+
     this.trainingPlans.forEach(plan => {
 
       this.calendar.getApi().addEvent({

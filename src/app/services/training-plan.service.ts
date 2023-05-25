@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {CommunicationRequestService} from "./lib/communication-request.service";
 import {HttpParams} from "@angular/common/http";
-import {ActualExercise, TrainingPlan} from "../models/training-plan";
+import {ActualExercise, Exercise, TrainingPlan} from "../models/training-plan";
 import {firstValueFrom, of, Subject} from "rxjs";
 
 @Injectable({
@@ -128,6 +128,28 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
 
 
   public addTrainingPlan(trainingPlan: TrainingPlan) {
+
+    // Remove original values from exercises and change id if its not the original
+
+    Object.keys(trainingPlan.exercises).forEach(key => {
+      trainingPlan.exercises[key].forEach(e => {
+        if(!e.original)
+          return;
+
+        if(e.name == e.original.name && e.reps == e.original.reps && e.sets == e.original.sets && e.weight == e.original.weight){
+          delete e['name'];
+          delete e['sets'];
+          delete e['reps'];
+          delete e['weight'];
+        }
+        else {
+          e.id = null;
+        }
+        delete e['original'];
+
+      })
+    })
+
     return super.sendPostRequest(this.backendUrlPath, trainingPlan).then(async res => {
       await this.getTrainingPlans();
       return res;
@@ -142,12 +164,23 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
   }
 
   public getTrainingPlans() {
-    // return super.sendGetRequest<TrainingPlan[]>(this.backendUrlPath).catch(() => {return []})
+    return super.sendGetRequest<TrainingPlan[]>(this.backendUrlPath)
+      .then(plans => {
+        this.trainingPlans = plans;
+        this.trainingPlans$.next(plans);
+        return plans;
+      }).catch(() => {
+        this.trainingPlans = [];
+        this.trainingPlans$.next([]);
+        return [];
+      })
+    /*
     return this.generateMockTrainingPlan().then(plans => {
       this.trainingPlans = plans;
       this.trainingPlans$.next(plans);
       return plans;
     })
+    */
   }
 
   public getActualExercises(date: string): Promise<ActualExercise[]> {

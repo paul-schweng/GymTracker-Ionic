@@ -20,6 +20,7 @@ export class TrainingPlanInfoComponent implements OnInit {
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {
+    console.log(this.trainingPlans, this.selectedTrainingPlan)
     this.trainingPlan = this.trainingPlans.find(plan => plan.id == this.selectedTrainingPlan)!;
   }
 

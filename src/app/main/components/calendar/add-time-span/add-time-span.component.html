@@ -31,4 +31,6 @@
 
   </ion-card>
 
+  <ion-button *ngIf="trainingPlan.id != '-1'" color="danger" (click)="deleteTrainingPlan()">Löschen</ion-button>
+
 </ion-content>

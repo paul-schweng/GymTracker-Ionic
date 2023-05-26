@@ -129,27 +129,6 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
 
   public addTrainingPlan(trainingPlan: TrainingPlan) {
 
-    // Remove original values from exercises and change id if its not the original
-
-    Object.keys(trainingPlan.exercises).forEach(key => {
-      trainingPlan.exercises[key].forEach(e => {
-        if(!e.original)
-          return;
-
-        if(e.name == e.original.name && e.reps == e.original.reps && e.sets == e.original.sets && e.weight == e.original.weight){
-          delete e['name'];
-          delete e['sets'];
-          delete e['reps'];
-          delete e['weight'];
-        }
-        else {
-          e.id = null;
-        }
-        delete e['original'];
-
-      })
-    })
-
     return super.sendPostRequest(this.backendUrlPath, trainingPlan).then(async res => {
       await this.getTrainingPlans();
       return res;
@@ -182,6 +161,15 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
     })
     */
   }
+
+
+  public deleteTrainingPlan(id: string) {
+    return super.sendDeleteRequest(this.backendUrlPath + `/${id}`).then(async res => {
+      await this.getTrainingPlans();
+      return res;
+    })
+  }
+
 
   public getActualExercises(date: string): Promise<ActualExercise[]> {
     if(!date)

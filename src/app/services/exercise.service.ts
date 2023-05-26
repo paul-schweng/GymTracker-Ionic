@@ -67,8 +67,24 @@ export class ExerciseService extends CommunicationRequestService<any> {
   }
 
   getExercisesByName(name: string): Promise<Exercise[]> {
+    if(!name.trim())
+      return firstValueFrom(of([]));
     // return firstValueFrom(of(this.mockData.filter((exercise) => exercise.name === name)));
-    return super.sendGetRequest(this.backendUrlPath + '/autocomplete', {q: name});
+    return super.sendGetRequest<Exercise[]>(this.backendUrlPath + '/autocomplete', {q: name.trim()}).then(exercises => {
+
+      exercises.sort((a, b) => {
+        if (a.id && !b.id) {
+          return -1;
+        } else if (!a.id && b.id) {
+          return 1;
+        } else {
+          // If both have ID or both don't have ID, sort alphabetically
+          return a.name.localeCompare(b.name);
+        }
+      });
+      return exercises;
+
+    });
   }
 
   getExercises(): Promise<{ [key: string]: Exercise[] }> {

@@ -42,7 +42,7 @@
                 <ion-list *ngIf="searchResults.length > 0">
                   <ion-item *ngFor="let exercise of searchResults" (click)="setExercise(i, j, exercise)" click-stop-propagation>
                     <ion-label>{{exercise.name}}</ion-label>
-                    <ion-note slot="end">Letzter Stand</ion-note>
+                    <ion-note *ngIf="exercise.id" slot="end">Letzter Stand</ion-note>
                   </ion-item>
                 </ion-list>
               </div>

@@ -9,6 +9,7 @@ import deLocale from "@fullcalendar/core/locales/de";
 import {FullCalendarComponent} from "@fullcalendar/angular";
 import * as fnsDate from 'date-fns';
 import {FormControl} from "@angular/forms";
+import {TrainingPlanService} from "../../../../services/training-plan.service";
 
 
 @Component({
@@ -58,7 +59,8 @@ export class AddTimeSpanComponent implements OnInit {
   }
 
   constructor(private modalCtrl: ModalController,
-              private changeDetector: ChangeDetectorRef) {
+              private changeDetector: ChangeDetectorRef,
+              private trainingPlanService: TrainingPlanService) {
   }
 
   ngOnInit() {
@@ -83,6 +85,12 @@ export class AddTimeSpanComponent implements OnInit {
 
   modelClose() {
     this.modalCtrl.dismiss()
+  }
+
+  deleteTrainingPlan() {
+    this.trainingPlanService.deleteTrainingPlan(this.trainingPlan.id!).then(() => {
+      this.modalCtrl.dismiss()
+    })
   }
 
   calendarSelected(info?) {

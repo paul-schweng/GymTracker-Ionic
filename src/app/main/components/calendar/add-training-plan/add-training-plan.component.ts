@@ -111,7 +111,6 @@ export class AddTrainingPlanComponent implements OnInit {
 
   setExercise(i: number, j: number, exercise: Exercise) {
     console.log(i, j, exercise, this.exercises)
-    exercise['original'] = structuredClone(exercise);
     this.exercises[i][j] = exercise;
     this.searchResults = [];
   }

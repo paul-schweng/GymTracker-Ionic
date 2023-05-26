@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {CommunicationRequestService} from "./lib/communication-request.service";
 import {HttpParams} from "@angular/common/http";
-import {ActualExercise, Exercise, TrainingPlan} from "../models/training-plan";
+import {ActualExercise, TrainingPlan} from "../models/training-plan";
 import {firstValueFrom, of, Subject} from "rxjs";
 
 @Injectable({

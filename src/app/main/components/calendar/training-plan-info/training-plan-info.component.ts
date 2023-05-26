@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TrainingPlan } from 'src/app/models/training-plan';
 import {BaseModalComponent} from "../../common/base-modal/base-modal.component";

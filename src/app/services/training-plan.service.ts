@@ -171,17 +171,9 @@ export class TrainingPlanService extends CommunicationRequestService<any> {
   }
 
 
-  public getActualExercises(date: string): Promise<ActualExercise[]> {
-    if(!date)
-      return firstValueFrom<ActualExercise[]>(of([]));
 
-    // return super.sendGetRequest<ActualExercise[]>(this.backendUrlPath + `/${date}/actual-exercises`).catch(() => {return []})
-    return this.generateActualExercises(date)
-  }
 
-  public addActualExercise(exercise: ActualExercise) {
-    return super.sendPostRequest(this.backendUrlPath + `/${exercise.date}/actual-exercises`, exercise)
-  }
+
 
 
 }

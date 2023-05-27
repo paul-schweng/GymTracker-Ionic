@@ -14,7 +14,7 @@
   <h2><b>Was hast du tatsächlich geschafft?</b></h2>
   <input-field label="Erreichte Wiederholungen" [(model)]="exercise.actualSets"></input-field>
   <input-field label="Erreichte Sätze" [(model)]="exercise.actualReps"></input-field>
-  <input-field label="Erreichtes Gewicht" endSlot="kg" [(model)]="exercise.actualWeight"></input-field>
+  <input-field label="Erreichtes Gewicht" *ngIf="exercise.weight" endSlot="kg" [(model)]="exercise.actualWeight"></input-field>
 
   <ion-button expand="full" color="success" (click)="submitExerciseData()">Einreichen</ion-button>
 </ion-content>

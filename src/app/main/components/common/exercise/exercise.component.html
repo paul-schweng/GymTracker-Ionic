@@ -17,7 +17,7 @@
       <ion-card-header color="primary">
         <ion-card-title>
           {{ exercise.name }}
-          <ion-icon *ngIf="isToday" name="create-outline" class="edit-icon"></ion-icon>
+          <ion-icon *ngIf="isBeforeTomorrow" name="create-outline" class="edit-icon"></ion-icon>
         </ion-card-title>
         <ion-icon *ngIf="exerciseReachedGoal(exercise)" name="checkmark-circle" size="large" class="goal-icon"></ion-icon>
       </ion-card-header>

@@ -5,6 +5,7 @@ import {ExerciseInputModalComponent} from "../exercise-input-modal/exercise-inpu
 import * as date from 'date-fns';
 import { de } from 'date-fns/locale';
 import {TrainingPlanService} from "../../../../services/training-plan.service";
+import {ExerciseService} from "../../../../services/exercise.service";
 
 
 
@@ -19,37 +20,39 @@ export class ExerciseComponent implements OnInit {
   @Input() exercises: Exercise[] = [];
   actualExercises: ActualExercise[] = [];
   today = date.format(new Date(), 'yyyy-MM-dd');
-  isToday = true;
+  isBeforeTomorrow = true;
   completedExercises: number = 0;
   totalExercises: number = 0;
 
   constructor(private modalController: ModalController,
-              private trainingPlanService: TrainingPlanService) {
+              private trainingPlanService: TrainingPlanService,
+              private exerciseService: ExerciseService) {
 
   }
 
   ngOnInit(): void {
     this.totalExercises = this.exercises.length;
     this.loadActualExercises();
-    this.isToday = this.today == this.date;
+    this.isBeforeTomorrow = new Date(this.today) >= new Date(this.date);
   }
 
   loadActualExercises() {
     if(!this.date || this.exercises.length == 0)
       return;
 
-    this.trainingPlanService.getActualExercises(this.date).then((actualExercises) => {
+    this.exerciseService.getActualExercises(this.date).then((actualExercises) => {
       this.actualExercises = this.exercises.map((exercise) => {
         const matchingExercise = actualExercises.find(
-          (actualExercise) => actualExercise.name === exercise.name
+          (actualExercise) => actualExercise.id === exercise.id
         );
+        console.log(matchingExercise)
 
         if (matchingExercise) {
           return {
             ...exercise,
-            actualSets: matchingExercise.sets,
-            actualReps: matchingExercise.reps,
-            actualWeight: matchingExercise.weight,
+            actualSets: matchingExercise.actualSets,
+            actualReps: matchingExercise.actualReps,
+            actualWeight: matchingExercise.actualWeight,
             date: matchingExercise.date,
           };
         } else {
@@ -72,7 +75,7 @@ export class ExerciseComponent implements OnInit {
 
 
   async editExercise(exercise: ActualExercise) {
-    if (!this.isToday)
+    if (!this.isBeforeTomorrow)
       return
 
     const modal = await this.modalController.create({
@@ -89,7 +92,7 @@ export class ExerciseComponent implements OnInit {
       exercise.actualReps = data.actualReps
       exercise.actualSets = data.actualSets
       exercise.actualWeight = data.actualWeight
-      await this.trainingPlanService.addActualExercise(exercise);
+      await this.exerciseService.addActualExercise(exercise);
     }
     this.calculateDailyProgress();
 
@@ -105,6 +108,7 @@ export class ExerciseComponent implements OnInit {
 
 
   calculateDailyProgress(): void {
+    console.log(this.actualExercises)
     const totalExercises = this.exercises.length;
     let completedExercises = 0;
 

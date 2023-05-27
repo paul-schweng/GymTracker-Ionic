@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {CommunicationRequestService} from "./lib/communication-request.service";
 import {HttpParams} from "@angular/common/http";
-import {Exercise} from "../models/training-plan";
+import {ActualExercise, Exercise} from "../models/training-plan";
 import {firstValueFrom, of} from "rxjs";
 
 @Injectable({
@@ -14,6 +14,9 @@ export class ExerciseService extends CommunicationRequestService<any> {
   protected prepareRequestObjectParameter(reqParameter: any): HttpParams {
     if(reqParameter.q) {
       return new HttpParams().set('q', reqParameter.q);
+    }
+    if(reqParameter.date) {
+      return new HttpParams().set('date', reqParameter.date);
     }
     return new HttpParams();
   }
@@ -89,6 +92,19 @@ export class ExerciseService extends CommunicationRequestService<any> {
 
   getExercises(): Promise<{ [key: string]: Exercise[] }> {
     return super.sendGetRequest(this.backendUrlPath);
+  }
+
+
+  public addActualExercise(exercise: ActualExercise) {
+    return super.sendPostRequest(this.backendUrlPath + `/${exercise.id}/actual-exercises`, exercise)
+  }
+
+  public getActualExercises(date: string): Promise<ActualExercise[]> {
+    if(!date)
+      return firstValueFrom<ActualExercise[]>(of([]));
+
+    return super.sendGetRequest<ActualExercise[]>(this.backendUrlPath + `/actual-exercises`, {date: date}).catch(() => {return []})
+    // return this.generateActualExercises(date)
   }
 
 }

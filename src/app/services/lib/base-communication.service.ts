@@ -5,6 +5,8 @@ import {environment} from "../../../environments/environment";
 import {Subject, Subscription} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {NotificationService} from "../notification.service";
+import {Platform} from "@ionic/angular";
+import {CapacitorPlatform} from "@capacitor/core/types/platforms";
 
 
 @Injectable({
@@ -13,11 +15,20 @@ import {NotificationService} from "../notification.service";
 export abstract class BaseCommunicationService {
   constructor(protected notification: NotificationService,
               protected http: HttpClient,
-              protected router: Router) {
+              protected router: Router,
+              private platform: Platform) {
+
+    if(platform.is('capacitor')){
+      this.backendUrl = environment.baseUrl + `/${environment.backendPrefix}/`;
+    }
+    else {
+      this.backendUrl = `../${environment.backendPrefix}/`;
+    }
+
   }
 
 
-  protected backendUrl = `../${environment.backendPrefix}/`;
+  protected backendUrl;
   protected callReplay: Subject<boolean> = new Subject<boolean>();
   protected headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
   private subscriptionMap = new Map();

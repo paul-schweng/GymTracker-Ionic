@@ -7,7 +7,7 @@ import {environment as defaultSettings} from "./default";
 export const environment = {
   ...defaultSettings,
   production: false,
-  baseUrl: ''
+  baseUrl: 'http://localhost:8080'
 };
 
 

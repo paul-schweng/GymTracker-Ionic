@@ -6,7 +6,6 @@ import {Subject, Subscription} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {NotificationService} from "../notification.service";
 import {Platform} from "@ionic/angular";
-import {CapacitorPlatform} from "@capacitor/core/types/platforms";
 
 
 @Injectable({
@@ -44,7 +43,7 @@ export abstract class BaseCommunicationService {
   protected executeSendGetRequest<TResult>(url: string, httpReqParam: HttpParams, httpHeaders?: HttpHeaders, allowNullResult: boolean = false, subscriptionURL: string = ""): Promise<TResult> {
     this.checkSubscriptions(subscriptionURL);
     return new Promise<TResult>((resolve, reject) => {
-      let subs: Subscription = this.http.get<TResult>(this.backendUrl + url, {params: httpReqParam, headers: (httpHeaders || BaseCommunicationService.prepareRequestHeaders())})
+      let subs: Subscription = this.http.get<TResult>(this.backendUrl + url, {params: httpReqParam, headers: (httpHeaders || BaseCommunicationService.prepareRequestHeaders()), withCredentials: true})
         .pipe(takeUntil(this.callReplay))
         .subscribe(response => {
             if (!allowNullResult && !response) {
@@ -69,7 +68,7 @@ export abstract class BaseCommunicationService {
     if (!httpReqParam) httpReqParam = new HttpParams();
 
     return new Promise<TResult>((resolve, reject) => {
-      this.http.post<TResult>(this.backendUrl + url, content, {params: httpReqParam, headers: BaseCommunicationService.prepareRequestHeaders()})
+      this.http.post<TResult>(this.backendUrl + url, content, {params: httpReqParam, headers: BaseCommunicationService.prepareRequestHeaders(), withCredentials: true})
         .pipe(takeUntil(this.callReplay))
         .subscribe(response => {
             resolve(response);
@@ -85,7 +84,7 @@ export abstract class BaseCommunicationService {
     if (!httpReqParam) httpReqParam = new HttpParams();
 
     return new Promise<TResult>((resolve, reject) => {
-      this.http.put<TResult>(this.backendUrl + url, content, {params: httpReqParam, headers: BaseCommunicationService.prepareRequestHeaders()})
+      this.http.put<TResult>(this.backendUrl + url, content, {params: httpReqParam, headers: BaseCommunicationService.prepareRequestHeaders(), withCredentials: true})
         .pipe(takeUntil(this.callReplay))
         .subscribe(response => {
             resolve(response);
@@ -101,7 +100,7 @@ export abstract class BaseCommunicationService {
     if (!httpReqParam) httpReqParam = new HttpParams();
 
     return new Promise<TResult>((resolve, reject) => {
-      this.http.delete<TResult>(this.backendUrl + url, {params: httpReqParam, headers: BaseCommunicationService.prepareRequestHeaders()})
+      this.http.delete<TResult>(this.backendUrl + url, {params: httpReqParam, headers: BaseCommunicationService.prepareRequestHeaders(), withCredentials: true})
         .pipe(takeUntil(this.callReplay))
         .subscribe(response => {
             resolve(response);
@@ -122,7 +121,8 @@ export abstract class BaseCommunicationService {
   }
 
   private static prepareRequestHeaders(headers?: HttpHeaders): HttpHeaders {
-    if (headers == null) headers = new HttpHeaders();
+    if (headers == null)
+      headers = new HttpHeaders();
 
     //add headers here
 

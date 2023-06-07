@@ -48,6 +48,7 @@ export class CalendarComponent implements OnInit {
     const dayName = dayNames[day];
 
 
+
     // Show the ExercisesModalComponent as before
     const trainingPlan = this.getTrainingPlanForDate(new Date(date));
     const exercises = trainingPlan?.exercises[dayName] ?? [];

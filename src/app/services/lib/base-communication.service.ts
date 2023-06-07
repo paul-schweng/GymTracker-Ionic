@@ -6,6 +6,7 @@ import {Subject, Subscription} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {NotificationService} from "../notification.service";
 import {Platform} from "@ionic/angular";
+import {HttpOptions} from "@capacitor/core";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export abstract class BaseCommunicationService {
               private platform: Platform) {
 
     if(platform.is('capacitor')){
-      this.backendUrl = environment.baseUrl + `/${environment.backendPrefix}/`;
+      this.backendUrl = `https://${environment.baseUrl}/${environment.backendPrefix}/`;
     }
     else {
       this.backendUrl = `../${environment.backendPrefix}/`;
@@ -41,6 +42,18 @@ export abstract class BaseCommunicationService {
 
 
   protected executeSendGetRequest<TResult>(url: string, httpReqParam: HttpParams, httpHeaders?: HttpHeaders, allowNullResult: boolean = false, subscriptionURL: string = ""): Promise<TResult> {
+    let headersDict = {};
+    httpHeaders?.keys().forEach(key => {
+      headersDict[key] = httpHeaders.get(key);
+    });
+    const options: HttpOptions = {
+      url: this.backendUrl + url,
+      headers: headersDict,
+      webFetchExtra: {
+        credentials: 'include',
+      }
+    }
+
     this.checkSubscriptions(subscriptionURL);
     return new Promise<TResult>((resolve, reject) => {
       let subs: Subscription = this.http.get<TResult>(this.backendUrl + url, {params: httpReqParam, headers: (httpHeaders || BaseCommunicationService.prepareRequestHeaders()), withCredentials: true})

@@ -61,6 +61,12 @@ export class NotificationService {
     }
     else {
       console.info( '[BaseCommunicationService] - An error occurred while calling backend:\n', error.message);
+      console.info('full error: \n');
+      try{
+        console.info(JSON.stringify(error));
+      }catch (e) {
+        console.info('could not stringify error: ', e);
+      }
       this.error(this.httpErrorPath, `Es ist ein Fehler aufgetreten (Code: ${error?.status})`, 'globe');
     }
   }
